@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASPL Racing Series — Kompetitives ACC-Racing</title>
+<meta name="description" content="ASPL Racing Series — kompetitive Assetto-Corsa-Competizione-Liga. Solo Series Season 2, 9 Teams, ein Standard. Race mit ASPL.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="ASPL Racing Series">
+<meta property="og:description" content="Kompetitives ACC-Racing. Richtig gemacht. Solo Series Season 2 — 9 Teams, ein Standard.">
+<meta property="og:image" content="images/branding/logo.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0B">
+<link rel="icon" href="images/branding/logo.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg-base:#0A0A0B;
+  --bg-surface:#141417;
+  --bg-elevated:#1B1B1F;
+  --border:#26262B;
+  --text-primary:#F5F5F7;
+  --text-second:#9A9AA3;
+  --text-muted:#6B6B73;
+  --accent:#E10600;
+  --accent-hover:#FF1A0D;
+  --accent-soft:rgba(225,6,0,.12);
+  --team-accent:#38BDF8;
+  --success:#22C55E;
+  --warning:#F59E0B;
+  --r-sm:6px; --r-md:10px; --r-lg:14px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+[id]{scroll-margin-top:88px;}
+body{
+  margin:0;
+  background:var(--bg-base);
+  color:var(--text-primary);
+  font-family:'Inter',sans-serif;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+.scroll-rail{
+  position:fixed;top:0;left:0;width:3px;height:100vh;z-index:150;
+  background:transparent;pointer-events:none;
+}
+.scroll-rail::after{
+  content:'';position:absolute;top:0;left:0;width:100%;
+  height:var(--progress,0%);
+  background:linear-gradient(180deg,var(--accent),var(--accent-hover));
+  box-shadow:0 0 12px var(--accent);
+  transition:height .1s linear;
+}
+@media(max-width:768px){.scroll-rail{display:none;}}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,h4{
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  letter-spacing:.01em;
+  margin:0 0 .4em;
+}
+.mono{font-family:'JetBrains Mono',monospace;}
+.container{max-width:1240px;margin:0 auto;padding:0 24px;}
+section{padding:96px 0;position:relative;}
+@media(max-width:768px){section{padding:64px 0;}}
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  color:var(--accent);
+  font-size:.8rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--accent);display:inline-block;}
+
+h2.section-title{
+  font-size:clamp(1.9rem,3.4vw,2.9rem);
+  text-transform:uppercase;
+  line-height:1.05;
+}
+.section-sub{color:var(--text-second);max-width:640px;font-size:1rem;margin-bottom:48px;}
+
+.border-card{
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.border-card:hover{border-color:#3a3a41;transform:translateY(-2px);box-shadow:0 12px 28px -12px rgba(0,0,0,.5);}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:14px 28px;border-radius:var(--r-sm);
+  border:1px solid transparent;cursor:pointer;
+  transition:all .2s ease;
+  clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 0 rgba(225,6,0,0);}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 8px 24px -4px rgba(225,6,0,.5);transform:translateY(-1px);}
+.btn-outline{background:transparent;border-color:var(--border);color:var(--text-primary);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px);}
+.btn-sm{padding:10px 20px;font-size:.85rem;}
+
+/* ============ LANG TOGGLE ============ */
+.lang-toggle{
+  display:flex;align-items:center;border:1px solid var(--border);border-radius:20px;
+  overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.05em;
+}
+.lang-btn{
+  background:none;border:none;color:var(--text-muted);padding:6px 12px;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.05em;transition:all .2s ease;
+}
+.lang-btn.active{background:var(--accent);color:#fff;}
+.mobile-menu .lang-toggle{margin:8px 0 24px;align-self:flex-start;}
+
+/* ============ NAV ============ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+  border-bottom:1px solid transparent;
+}
+header.solid{
+  background:rgba(10,10,11,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+header::after{
+  content:'';position:absolute;bottom:-1px;left:0;height:1px;width:100%;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity:0;transition:opacity .3s ease;
+}
+header.solid::after{opacity:.6;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1240px;margin:0 auto;padding:16px 24px;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:34px;width:auto;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{
+  font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.95rem;
+  letter-spacing:.03em;text-transform:uppercase;color:var(--text-second);
+  position:relative;padding:6px 0;transition:color .2s ease;
+}
+.nav-links a:hover, .nav-links a.active{color:var(--text-primary);}
+.nav-links a.active::after{
+  content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--accent);
+}
+.nav-cta{display:flex;align-items:center;gap:14px;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+.hamburger span{width:26px;height:2px;background:var(--text-primary);}
+@media(max-width:960px){
+  .nav-links{display:none;}
+  .nav-cta .btn, .nav-cta .lang-toggle{display:none;}
+  .hamburger{display:flex;}
+}
+
+.mobile-menu{
+  position:fixed;inset:0;background:var(--bg-base);z-index:200;
+  display:none;flex-direction:column;padding:24px;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.mobile-menu a{
+  font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;text-transform:uppercase;
+  padding:16px 0;border-bottom:1px solid var(--border);color:var(--text-primary);
+}
+.mobile-menu .btn{margin-top:auto;width:100%;}
+.close-btn{background:none;border:none;color:var(--text-primary);font-size:1.8rem;cursor:pointer;}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+  padding-top:120px;
+  background:
+    radial-gradient(ellipse 900px 600px at 18% 8%, rgba(225,6,0,.16), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 88% 82%, rgba(56,189,248,.08), transparent 60%),
+    linear-gradient(155deg, #0A0A0B 0%, #121215 42%, #0A0A0B 100%);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image: linear-gradient(rgba(245,245,247,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(245,245,247,.05) 1px, transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 30%, black, transparent 75%);
+  pointer-events:none;
+}
+.hero-streak{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+}
+.hero-streak span{
+  position:absolute;height:1px;right:-10%;width:130%;
+  background:linear-gradient(90deg, transparent, rgba(225,6,0,.55), transparent);
+  transform:rotate(-9deg);
+}
+.hero-streak span:nth-child(1){top:22%;opacity:.7;}
+.hero-streak span:nth-child(2){top:38%;width:90%;opacity:.4;background:linear-gradient(90deg, transparent, rgba(56,189,248,.4), transparent);}
+.hero-streak span:nth-child(3){top:68%;opacity:.5;}
+.hero-inner{position:relative;z-index:2;text-align:center;}
+.hero-wordmark{height:64px;margin:0 auto 28px;}
+.hero h1{
+  font-size:clamp(2.6rem,7vw,5.2rem);
+  text-transform:uppercase;line-height:.98;
+  text-shadow:0 4px 40px rgba(0,0,0,.5);
+}
+.hero h1 .accent-word{color:var(--accent);}
+.hero-sub{
+  color:var(--text-second);max-width:560px;margin:20px auto 36px;font-size:1.1rem;
+}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.placeholder-tag{
+  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  color:var(--warning);border:1px dashed var(--warning);background:rgba(245,158,11,.08);
+  padding:2px 8px;border-radius:4px;letter-spacing:.03em;vertical-align:middle;margin-left:8px;
+}
+
+.scroll-indicator{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  width:22px;height:36px;border:2px solid var(--text-muted);border-radius:12px;z-index:2;
+}
+.scroll-indicator::after{
+  content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:4px;height:8px;background:var(--accent);border-radius:2px;
+  animation:scrolldown 1.6s infinite;
+}
+@keyframes scrolldown{0%{opacity:1;top:6px;}100%{opacity:0;top:18px;}}
+
+/* ============ STAT BAR ============ */
+.stat-bar{
+  position:relative;z-index:2;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(20,20,23,.6);backdrop-filter:blur(6px);
+}
+.stat-bar .container{
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.stat-item{
+  padding:28px 12px;text-align:center;border-right:1px solid var(--border);
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.4rem,3vw,2rem);color:var(--text-primary);
+}
+.stat-num .dot-live{
+  display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);
+  margin-right:6px;box-shadow:0 0 8px var(--success);animation:pulse 1.6s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.stat-label{color:var(--text-muted);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;}
+@media(max-width:768px){.stat-bar .container{grid-template-columns:repeat(2,1fr);}.stat-item:nth-child(2){border-right:none;}}
+
+/* ============ ABOUT / STRUCTURE ============ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
+.value-list{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:14px;}
+.value-list li{
+  display:flex;gap:12px;align-items:flex-start;color:var(--text-second);font-size:.95rem;
+}
+.value-list li::before{content:'▸';color:var(--accent);font-weight:700;}
+
+.structure-diagram{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;}
+.structure-node{
+  font-family:'Rajdhani',sans-serif;font-weight:700;text-align:center;text-transform:uppercase;
+  padding:14px;border-radius:var(--r-sm);letter-spacing:.03em;
+}
+.structure-root{background:var(--accent-soft);border:1px solid var(--accent);color:var(--text-primary);margin-bottom:8px;}
+.structure-branch{
+  border-left:1px solid var(--border);border-bottom:1px solid var(--border);
+  height:24px;width:50%;margin:0 auto;
+}
+.structure-children{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;}
+.structure-children .structure-node{background:var(--bg-elevated);border:1px solid var(--border);font-size:.85rem;}
+.structure-teams-node{grid-column:span 2;background:var(--bg-elevated);border:1px solid var(--border);font-size:.8rem;color:var(--text-second);font-weight:600;}
+
+.mgmt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;max-width:400px;}
+.mgmt-card{padding:24px 16px;text-align:center;}
+.mgmt-avatar{
+  width:56px;height:56px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);
+  margin:0 auto 14px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-family:'JetBrains Mono',monospace;
+}
+.mgmt-role{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;font-size:.9rem;}
+.mgmt-name{color:var(--text-muted);font-size:.78rem;margin-top:4px;}
+
+/* ============ SERIES / CARS ============ */
+.car-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:900px){.car-grid{grid-template-columns:1fr;}}
+.car-card{padding:32px 24px;position:relative;overflow:hidden;}
+.car-card::before{
+  content:'';position:absolute;top:0;right:0;width:70px;height:70px;
+  background:var(--accent-soft);clip-path:polygon(100% 0,0 0,100% 100%);
+}
+.car-num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.8rem;}
+.car-name{font-size:1.35rem;margin:10px 0 4px;text-transform:uppercase;}
+.car-class{color:var(--text-muted);font-size:.85rem;}
+
+/* ============ TEAMS ============ */
+.teams-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+@media(max-width:960px){.teams-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.teams-grid{grid-template-columns:1fr;}}
+.team-card{
+  position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;
+  border:1px solid var(--border);transition:border-color .3s ease, transform .3s ease;
+}
+.team-card:hover{border-color:var(--accent);transform:translateY(-4px);}
+.team-card img.team-bg{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(35%) brightness(.55);transition:transform .5s ease, filter .5s ease;
+}
+.team-card:hover img.team-bg{transform:scale(1.08);filter:grayscale(0%) brightness(.42);}
+.team-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(10,10,11,.1) 0%, rgba(10,10,11,.92) 85%);
+}
+.team-card-num{
+  position:absolute;top:14px;right:16px;z-index:2;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(245,245,247,.55);
+  letter-spacing:.08em;
+}
+.team-card-content{position:absolute;bottom:0;left:0;right:0;padding:20px;z-index:2;}
+.team-logo-badge{
+  width:52px;height:52px;border-radius:var(--r-sm);background:rgba(10,10,11,.75);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden;
+}
+.team-logo-badge img{width:100%;height:100%;object-fit:contain;}
+.team-name{font-size:1.2rem;text-transform:uppercase;margin:0;}
+
+/* ============ HIGHLIGHTS ============ */
+.highlight-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media(max-width:900px){.highlight-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:640px){.highlight-grid{grid-template-columns:repeat(2,1fr);}}
+.highlight-card img{
+  width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--r-md);
+  border:1px solid var(--border);filter:grayscale(15%);transition:filter .3s ease, transform .3s ease;
+}
+.highlight-card:hover img{filter:grayscale(0%);transform:translateY(-3px);}
+
+/* ============ HALL OF FAME / MEDIA ============ */
+.hof-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;}
+@media(max-width:900px){.hof-grid{grid-template-columns:1fr;}}
+.hof-img{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);}
+.video-card{
+  background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:28px;text-align:center;
+}
+.video-icon{
+  width:60px;height:60px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--accent);font-size:1.4rem;
+}
+
+/* ============ PARTNERS ============ */
+.partner-block{display:grid;grid-template-columns:.6fr 1.4fr;gap:40px;align-items:center;}
+@media(max-width:900px){.partner-block{grid-template-columns:1fr;}}
+.partner-logo-wrap{background:#fff;border-radius:var(--r-lg);padding:24px;display:flex;align-items:center;justify-content:center;}
+.partner-logo-wrap img{max-width:180px;}
+.partner-shots{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.partner-shots img{border-radius:var(--r-md);border:1px solid var(--border);aspect-ratio:4/3;object-fit:cover;}
+
+/* ============ SCHEDULE ============ */
+table.schedule-table{width:100%;border-collapse:collapse;}
+table.schedule-table th{
+  text-align:left;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-muted);padding:12px 16px;border-bottom:1px solid var(--border);
+}
+table.schedule-table td{
+  padding:18px 16px;border-bottom:1px solid var(--border);font-size:.92rem;
+}
+table.schedule-table tr:last-child td{border-bottom:none;}
+.badge{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;
+  padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;
+}
+.badge-upcoming{background:rgba(154,154,163,.12);color:var(--text-second);border:1px solid var(--border);}
+.badge-live{background:rgba(34,197,94,.12);color:var(--success);border:1px solid var(--success);}
+.badge-done{background:rgba(56,189,248,.12);color:var(--team-accent);border:1px solid var(--team-accent);}
+.round-mono{font-family:'JetBrains Mono',monospace;color:var(--text-muted);}
+.table-wrap{overflow-x:auto;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);}
+.table-wrap .container{padding:0;max-width:none;}
+.calendar-embed{width:100%;height:800px;border:0;display:block;}
+@media(max-width:640px){.calendar-embed{height:600px;}}
+
+/* ============ RESULTS ============ */
+.fastest-lap{color:var(--accent);font-family:'JetBrains Mono',monospace;}
+
+.rule-table-wrap{overflow-x:auto;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-md);margin:16px 0 28px;}
+.rule-table-wrap table{width:100%;border-collapse:collapse;}
+.rule-table-wrap th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap;}
+.rule-table-wrap td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.86rem;color:var(--text-second);}
+.rule-table-wrap tr:last-child td{border-bottom:none;}
+.rule-table-wrap td:last-child{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.8rem;white-space:nowrap;}
+.rule-note{
+  background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--r-sm);
+  padding:14px 18px;font-size:.86rem;color:var(--text-second);margin:16px 0;
+}
+.rule-section h4{font-size:.95rem;text-transform:uppercase;color:var(--text-primary);margin:20px 0 8px;}
+.rules-toc a{font-size:.82rem;line-height:1.3;}
+
+/* ============ RULES ============ */
+.rules-layout{display:grid;grid-template-columns:240px 1fr;gap:48px;}
+@media(max-width:860px){.rules-layout{grid-template-columns:1fr;}}
+.rules-toc{position:sticky;top:110px;align-self:start;width:100%;min-width:0;max-width:100%;box-sizing:border-box;}
+@media(max-width:860px){.rules-toc{position:static;}}
+.rules-toc a{
+  display:block;padding:10px 14px;border-left:2px solid var(--border);color:var(--text-second);
+  font-size:.88rem;transition:all .2s ease;
+}
+.rules-toc a:hover, .rules-toc a.active{border-left-color:var(--accent);color:var(--text-primary);}
+.rule-section{margin-bottom:48px;padding-top:12px;}
+.rule-section h3{font-size:1.3rem;text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:16px;}
+.rule-section p, .rule-section li{color:var(--text-second);font-size:.94rem;}
+
+.accordion-item{border-bottom:1px solid var(--border);}
+.accordion-header{
+  display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;
+  font-family:'Rajdhani',sans-serif;font-weight:600;font-size:1.05rem;
+}
+.accordion-header::after{content:'+';color:var(--accent);font-size:1.4rem;transition:transform .2s ease;}
+.accordion-item.open .accordion-header::after{transform:rotate(45deg);}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.accordion-item.open .accordion-body{max-height:400px;}
+.accordion-body-inner{padding:0 0 20px;color:var(--text-second);font-size:.92rem;}
+
+/* ============ JOIN ============ */
+.join-section{background:linear-gradient(180deg, var(--bg-surface), var(--bg-base));border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.join-columns{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:48px 0;}
+@media(max-width:800px){.join-columns{grid-template-columns:1fr;}}
+.join-col h4{font-size:1.1rem;text-transform:uppercase;color:var(--text-primary);}
+.join-col ul{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px;}
+.join-col li{color:var(--text-second);font-size:.92rem;display:flex;gap:10px;}
+.join-col.expect li::before{content:'—';color:var(--text-muted);}
+.join-col.offer li::before{content:'—';color:var(--accent);}
+
+/* ============ FOOTER / LEGAL ============ */
+footer{border-top:1px solid var(--border);padding:64px 0 32px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;}
+@media(max-width:800px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.footer-grid{grid-template-columns:1fr;gap:28px;}}
+.footer-brand img{height:32px;margin-bottom:12px;}
+.footer-brand p{color:var(--text-muted);font-size:.85rem;max-width:260px;}
+.footer-col h5{
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:16px;
+}
+.footer-col a{display:block;color:var(--text-second);font-size:.9rem;padding:6px 0;}
+.footer-col a:hover{color:var(--accent);}
+.footer-bottom{
+  border-top:1px solid var(--border);margin-top:48px;padding-top:24px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--text-muted);font-size:.8rem;
+}
+.footer-credit{
+  text-align:center;padding-top:18px;color:var(--text-muted);font-size:.78rem;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.03em;
+}
+.footer-credit a{color:var(--text-second);border-bottom:1px dotted var(--border);}
+.footer-credit a:hover{color:var(--accent);}
+.legal-section{padding:64px 0;border-bottom:1px solid var(--border);}
+.legal-section h3{text-transform:uppercase;font-size:1.4rem;}
+.legal-section p{color:var(--text-second);font-size:.9rem;}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease, transform .5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-rail" id="scroll-rail"></div>
+
+<!-- ============ HEADER ============ -->
+<header id="site-header">
+  <nav>
+    <a href="#top" class="nav-logo">
+      <img src="images/branding/logo.png" alt="ASPL Racing Series">
+    </a>
+    <div class="nav-links">
+      <a href="#series" data-de="Serie" data-en="Series">Serie</a>
+      <a href="#teams" data-de="Teams" data-en="Teams">Teams</a>
+      <a href="#highlights" data-de="Highlights" data-en="Highlights">Highlights</a>
+      <a href="#schedule" data-de="Rennkalender" data-en="Schedule">Rennkalender</a>
+      <a href="#results" data-de="Ergebnisse" data-en="Results">Ergebnisse</a>
+      <a href="#rules" data-de="Regelwerk" data-en="Rules">Regelwerk</a>
+    </div>
+    <div class="nav-cta">
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="#join" class="btn btn-primary btn-sm" data-de="Jetzt beitreten" data-en="Join Now">Jetzt beitreten</a>
+      <button class="hamburger" id="hamburger-btn" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-top">
+    <img src="images/branding/logo.png" alt="ASPL" style="height:32px;">
+    <button class="close-btn" id="close-menu-btn" aria-label="Menü schließen">&times;</button>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <a href="#series" data-de="Serie" data-en="Series">Serie</a>
+  <a href="#teams" data-de="Teams" data-en="Teams">Teams</a>
+  <a href="#highlights" data-de="Highlights" data-en="Highlights">Highlights</a>
+  <a href="#schedule" data-de="Rennkalender" data-en="Schedule">Rennkalender</a>
+  <a href="#results" data-de="Ergebnisse" data-en="Results">Ergebnisse</a>
+  <a href="#rules" data-de="Regelwerk" data-en="Rules">Regelwerk</a>
+  <a href="#about" data-de="Über uns" data-en="About">Über uns</a>
+  <a href="#join" class="btn btn-primary" data-de="Jetzt beitreten" data-en="Join Now">Jetzt beitreten</a>
+</div>
+
+<div id="top"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-streak"><span></span><span></span><span></span></div>
+  <div class="container hero-inner">
+    <img src="images/branding/logo.png" alt="ASPL Racing Series" class="hero-wordmark">
+    <h1 data-de="KOMPETITIVES ACC-RACING.<br><span class='accent-word'>RICHTIG GEMACHT.</span>" data-en="COMPETITIVE ACC RACING.<br><span class='accent-word'>DONE RIGHT.</span>">KOMPETITIVES ACC-RACING.<br><span class="accent-word">RICHTIG GEMACHT.</span></h1>
+    <p class="hero-sub"
+       data-de="Faire Rennen, klare Regeln, echte Rivalität — die ASPL Racing Series ist das Zuhause für ambitionierte ACC-Fahrer."
+       data-en="Fair racing, clear rules, real rivalry — the ASPL Racing Series is home for ambitious ACC drivers.">
+      Faire Rennen, klare Regeln, echte Rivalität — die ASPL Racing Series ist das Zuhause für ambitionierte ACC-Fahrer.
+    </p>
+    <div class="hero-ctas">
+      <a href="#join" class="btn btn-primary" data-de="Der Liga beitreten" data-en="Join the League">Der Liga beitreten</a>
+      <a href="#schedule" class="btn btn-outline" data-de="Rennkalender ansehen" data-en="View Schedule">Rennkalender ansehen</a>
+    </div>
+  </div>
+  <div class="scroll-indicator"></div>
+</section>
+
+<!-- ============ STAT BAR ============ -->
+<div class="stat-bar">
+  <div class="container">
+    <div class="stat-item">
+      <div class="stat-num" data-count="200">0+</div>
+      <div class="stat-label" data-de="Mitglieder" data-en="Members">Mitglieder</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-count="9">0</div>
+      <div class="stat-label" data-de="Teams" data-en="Teams">Teams</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="dot-live"></span>S2</div>
+      <div class="stat-label" data-de="Solo Series · Live" data-en="Solo Series · Live">Solo Series · Live</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">ACC</div>
+      <div class="stat-label" data-de="Assetto Corsa Competizione" data-en="Assetto Corsa Competizione">Assetto Corsa Competizione</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="container">
+    <div class="eyebrow" data-de="01 — Über uns" data-en="01 — About">01 — Über uns</div>
+    <h2 class="section-title" data-de="Was ist ASPL" data-en="What is ASPL">Was ist ASPL</h2>
+    <p class="section-sub" data-de="Die Kurzversion, bevor du weiterscrollst." data-en="The short version, before you scroll further.">Die Kurzversion, bevor du weiterscrollst.</p>
+
+    <div class="about-grid">
+      <div class="reveal">
+        <p style="color:var(--text-second);font-size:1.02rem;"
+           data-de="Anfang 2026 haben wir die ASPL Racing Series ins Leben gerufen — hervorgegangen aus unserer PC-ACC-Liga, der GT Racing League. Angetrieben von Leidenschaft, echtem Interesse am Motorsport und der Freude daran, anderen Sim-Racern ein starkes Erlebnis auf der Strecke zu bieten."
+           data-en="In early 2026 we launched the ASPL Racing Series — born out of our PC ACC league, the GT Racing League. Driven by passion, genuine interest in motorsport, and the enjoyment of giving other sim racers a great experience on track.">
+          Anfang 2026 haben wir die ASPL Racing Series ins Leben gerufen — hervorgegangen aus unserer PC-ACC-Liga, der GT Racing League. Angetrieben von Leidenschaft, echtem Interesse am Motorsport und der Freude daran, anderen Sim-Racern ein starkes Erlebnis auf der Strecke zu bieten.
+        </p>
+        <ul class="value-list">
+          <li data-de="Faires, sauberes Racing — mit Stewarding und ernst genommen." data-en="Fair, clean racing — stewarded and taken seriously.">Faires, sauberes Racing — mit Stewarding und ernst genommen.</li>
+          <li data-de="Eine echte kompetitive Struktur, keine lockere Discord-Lobby." data-en="A real competitive structure, not a casual Discord lobby.">Eine echte kompetitive Struktur, keine lockere Discord-Lobby.</li>
+          <li data-de="Klare Pace-Standards, damit Fahrer wissen, wo sie hingehören." data-en="Clear pace standards so drivers know where they fit.">Klare Pace-Standards, damit Fahrer wissen, wo sie hingehören.</li>
+        </ul>
+
+        <div class="mgmt-grid">
+          <div class="mgmt-card border-card">
+            <div class="mgmt-avatar mono">RL</div>
+            <div class="mgmt-role" data-de="Rennleitung" data-en="Race Control">Rennleitung</div>
+            <div class="mgmt-name">Djlowtom</div>
+          </div>
+          <div class="mgmt-card border-card">
+            <div class="mgmt-avatar mono">MD</div>
+            <div class="mgmt-role" data-de="Medien" data-en="Media">Medien</div>
+            <div class="mgmt-name">Ds_darby</div>
+          </div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-muted);margin-top:16px;"
+           data-de="Liga geführt von einem Owner plus fünf League Managern"
+           data-en="League led by an Owner plus five League Managers">
+          Liga geführt von einem Owner plus fünf League Managern
+        </p>
+      </div>
+
+      <div class="structure-diagram reveal">
+        <div class="structure-node structure-root">ASPL Racing Series</div>
+        <div class="structure-branch"></div>
+        <div class="structure-children">
+          <div class="structure-node" data-de="Solo Series<br><span style='font-size:.7rem;color:var(--text-muted);'>Season 2</span>" data-en="Solo Series<br><span style='font-size:.7rem;color:var(--text-muted);'>Season 2</span>">Solo Series<br><span style="font-size:.7rem;color:var(--text-muted);">Season 2</span></div>
+          <div class="structure-node" data-de="200+ Mitglieder<br><span style='font-size:.7rem;color:var(--text-muted);'>Discord</span>" data-en="200+ Members<br><span style='font-size:.7rem;color:var(--text-muted);'>Discord</span>">200+ Mitglieder<br><span style="font-size:.7rem;color:var(--text-muted);">Discord</span></div>
+          <div class="structure-teams-node" data-de="9 Teams — Chronos · Cosmos · Golden Dynasty · HRT Virtual · LuMo · Nussy · Racing Team Langsam · SVR · Toxic" data-en="9 Teams — Chronos · Cosmos · Golden Dynasty · HRT Virtual · LuMo · Nussy · Racing Team Langsam · SVR · Toxic">
+            9 Teams — Chronos · Cosmos · Golden Dynasty · HRT Virtual · LuMo · Nussy · Racing Team Langsam · SVR · Toxic
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERIES ============ -->
+<section id="series" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="eyebrow" data-de="02 — Solo Series" data-en="02 — Solo Series">02 — Solo Series</div>
+    <img src="images/branding/solo-series-logo.png" alt="ASPL Solo Series" style="height:56px;margin-bottom:18px;">
+    <h2 class="section-title" data-de="Season 2 — Jetzt live" data-en="Season 2 — Now Live">Season 2 — Jetzt live</h2>
+    <p class="section-sub" data-de="Drei GT3-Boliden. Eine Balance of Performance. Reines Fahrkönnen." data-en="Three GT3 cars. One Balance of Performance. Pure driver skill.">Drei GT3-Boliden. Eine Balance of Performance. Reines Fahrkönnen.</p>
+
+    <div class="car-grid">
+      <div class="car-card border-card reveal">
+        <div class="car-num" data-de="AUTO 01 / GT3" data-en="CAR 01 / GT3">AUTO 01 / GT3</div>
+        <div class="car-name">Ferrari 296 GT3</div>
+        <div class="car-class" data-de="Balance of Performance gilt" data-en="Balance of Performance applies">Balance of Performance gilt</div>
+      </div>
+      <div class="car-card border-card reveal">
+        <div class="car-num" data-de="AUTO 02 / GT3" data-en="CAR 02 / GT3">AUTO 02 / GT3</div>
+        <div class="car-name">Mercedes-AMG GT3 Evo</div>
+        <div class="car-class" data-de="Balance of Performance gilt" data-en="Balance of Performance applies">Balance of Performance gilt</div>
+      </div>
+      <div class="car-card border-card reveal">
+        <div class="car-num" data-de="AUTO 03 / GT3" data-en="CAR 03 / GT3">AUTO 03 / GT3</div>
+        <div class="car-name">Aston Martin V8 Vantage AMR GT3</div>
+        <div class="car-class" data-de="Balance of Performance gilt" data-en="Balance of Performance applies">Balance of Performance gilt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAMS ============ -->
+<section id="teams">
+  <div class="container">
+    <div class="eyebrow" data-de="03 — Teams" data-en="03 — Teams">03 — Teams</div>
+    <h2 class="section-title" data-de="Die neun Teams" data-en="The Nine Teams">Die neun Teams</h2>
+    <p class="section-sub" data-de="Jeder Fahrer der Solo Series tritt unter einem dieser Banner an." data-en="Every driver in the Solo Series races under one of these banners.">Jeder Fahrer der Solo Series tritt unter einem dieser Banner an.</p>
+
+    <div class="teams-grid">
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 01</div>
+        <img class="team-bg" src="images/teams/chronos/ingame-1.jpg" alt="Chronos ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/chronos/logo.png" alt="Chronos Logo"></div>
+          <h3 class="team-name">Chronos</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 02</div>
+        <img class="team-bg" src="images/teams/cosmos/ingame-1.jpg" alt="Cosmos ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/cosmos/logo.png" alt="Cosmos Logo"></div>
+          <h3 class="team-name">Cosmos</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 03</div>
+        <img class="team-bg" src="images/teams/golden-dynasty/ingame-1.jpg" alt="Golden Dynasty ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/golden-dynasty/logo.png" alt="Golden Dynasty Logo"></div>
+          <h3 class="team-name">Golden Dynasty</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 04</div>
+        <img class="team-bg" src="images/teams/hrt-virtual/ingame-1.jpg" alt="HRT Virtual ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/hrt-virtual/logo.png" alt="HRT Virtual Logo"></div>
+          <h3 class="team-name">HRT Virtual</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 05</div>
+        <img class="team-bg" src="images/teams/lumo/ingame-1.jpg" alt="LuMo ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/lumo/logo.png" alt="LuMo Logo"></div>
+          <h3 class="team-name">LuMo</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 06</div>
+        <img class="team-bg" src="images/teams/nussy/ingame-1.jpg" alt="Nussy ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/nussy/logo.png" alt="Nussy Logo"></div>
+          <h3 class="team-name">Nussy</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 07</div>
+        <img class="team-bg" src="images/teams/racing-team-langsam/ingame-1.jpg" alt="Racing Team Langsam ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/racing-team-langsam/logo.png" alt="Racing Team Langsam Logo"></div>
+          <h3 class="team-name">Racing Team Langsam</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 08</div>
+        <img class="team-bg" src="images/teams/svr/ingame-1.jpg" alt="SVR ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/svr/logo.jpg" alt="SVR Logo"></div>
+          <h3 class="team-name">SVR</h3>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-num">TEAM 09</div>
+        <img class="team-bg" src="images/teams/toxic/ingame-1.jpg" alt="Toxic ACC Actionfoto">
+        <div class="team-card-content">
+          <div class="team-logo-badge"><img src="images/teams/toxic/logo.png" alt="Toxic Logo"></div>
+          <h3 class="team-name">Toxic</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ HIGHLIGHTS ============ -->
+<section id="highlights" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="eyebrow" data-de="04 — Highlights" data-en="04 — Highlights">04 — Highlights</div>
+    <h2 class="section-title" data-de="Highlights" data-en="Highlights">Highlights</h2>
+
+    <div class="highlight-grid">
+      <div class="highlight-card reveal">
+        <img src="images/teams/chronos/driver-pfeiffer.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/teams/chronos/driver-guillaume.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/teams/golden-dynasty/driver-golden.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/teams/nussy/driver-diacuno.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/teams/racing-team-langsam/driver-fox.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/teams/racing-team-langsam/driver-kohl.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/teams/racing-team-langsam/driver-seefeldt.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/highlights/0a94bf9d-ae5a-4846-962c-eaa2a4336916.png" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/highlights/8740754b-6588-464c-a26d-5db92115ba8d.png" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/highlights/92973cac-89be-47e1-b3b8-b14c2f6c2451.png" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/highlights/IMG_5440.jpg" alt="">
+      </div>
+      <div class="highlight-card reveal">
+        <img src="images/highlights/a35aca4e-c0d1-4d68-a030-414882c5d71c.png" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HALL OF FAME / MEDIA ============ -->
+<section style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="eyebrow" data-de="05 — Hall of Fame" data-en="05 — Hall of Fame">05 — Hall of Fame</div>
+    <h2 class="section-title" data-de="Season-1-Champion" data-en="Season 1 Champion">Season-1-Champion</h2>
+    <p class="section-sub" data-de="Wir feiern die Fahrer, die sich ihren Platz an der Spitze bereits verdient haben." data-en="Celebrating the drivers who've already earned their place at the top.">Wir feiern die Fahrer, die sich ihren Platz an der Spitze bereits verdient haben.</p>
+
+    <div class="hof-grid">
+      <div class="hof-img reveal">
+        <img src="images/media/champion-ceremony.jpg" alt="ASPL Solo Series Siegerehrung mit Pokal">
+      </div>
+      <div class="video-card reveal">
+        <div class="video-icon">▶</div>
+        <h4 style="text-transform:uppercase;margin-bottom:8px;" data-de="Rückblick ansehen" data-en="Watch the recap">Rückblick ansehen</h4>
+        <p style="color:var(--text-second);font-size:.9rem;margin-bottom:20px;" data-de="Saison-Highlights auf unserem YouTube-Kanal." data-en="Season highlights on our YouTube channel.">Saison-Highlights auf unserem YouTube-Kanal.</p>
+        <a href="https://www.youtube.com/@ASPLKonsole" target="_blank" rel="noopener" class="btn btn-outline btn-sm" data-de="Auf YouTube ansehen" data-en="Watch on YouTube">Auf YouTube ansehen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERS ============ -->
+<section id="partners">
+  <div class="container">
+    <div class="eyebrow" data-de="06 — Partner" data-en="06 — Partners">06 — Partner</div>
+    <h2 class="section-title" data-de="Gemeinsam racen" data-en="Racing Together">Gemeinsam racen</h2>
+    <p class="section-sub" data-de="ASPL veranstaltet Crossover-Events mit Partnerligen und -Communities." data-en="ASPL runs crossover events with partner leagues and communities.">ASPL veranstaltet Crossover-Events mit Partnerligen und -Communities.</p>
+
+    <div class="partner-block reveal">
+      <div class="partner-logo-wrap">
+        <img src="images/partners/isr-logo.png" alt="Independent Sim Racer Logo">
+      </div>
+      <div class="partner-shots">
+        <img src="images/partners/crossover-1.jpg" alt="ASPL x ISR Crossover-Event">
+        <img src="images/partners/crossover-2.jpg" alt="ASPL x ISR Crossover-Event">
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:.85rem;color:var(--text-muted);"
+       data-de="Independent Sim Racer (ISR) — &quot;Virtual Speed, Real Passion.&quot;"
+       data-en="Independent Sim Racer (ISR) — &quot;Virtual Speed, Real Passion.&quot;">
+      Independent Sim Racer (ISR) — "Virtual Speed, Real Passion."
+    </p>
+  </div>
+</section>
+
+<!-- ============ SCHEDULE ============ -->
+<section id="schedule" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="eyebrow" data-de="07 — Rennkalender" data-en="07 — Schedule">07 — Rennkalender</div>
+    <h2 class="section-title" data-de="Rennkalender" data-en="Race Calendar">Rennkalender</h2>
+    <p class="section-sub" data-de="Alle Zeiten in Europe/Zurich. Bitte eure Ortszeit auf Discord prüfen." data-en="All times shown in Europe/Zurich. Confirm your local time on Discord.">Alle Zeiten in Europe/Zurich. Bitte eure Ortszeit auf Discord prüfen.</p>
+
+    <div class="table-wrap">
+      <iframe class="calendar-embed" src="https://manoaverner-maker.github.io/aspl-rennkalender/" title="ASPL Rennkalender" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section id="results">
+  <div class="container">
+    <div class="eyebrow" data-de="08 — Ergebnisse" data-en="08 — Results">08 — Ergebnisse</div>
+    <h2 class="section-title" data-de="Tabellen" data-en="Standings">Tabellen</h2>
+    <p class="section-sub" data-de="Meisterschaftstabellen Season 2 — nach jeder Runde aktualisiert." data-en="Season 2 championship standings — updated after every round.">Meisterschaftstabellen Season 2 — nach jeder Runde aktualisiert.</p>
+
+    <h3 style="text-transform:uppercase;font-size:1.1rem;margin-bottom:16px;" data-de="Solo Series" data-en="Solo Series">Solo Series</h3>
+    <div class="table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th data-de="Pos" data-en="Pos">Pos</th>
+            <th data-de="Fahrer" data-en="Driver">Fahrer</th>
+            <th data-de="Punkte" data-en="Points">Punkte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="round-mono">01</td><td>E. Sprott</td><td class="mono">88</td></tr>
+          <tr><td class="round-mono">02</td><td>K. Böhm</td><td class="mono">65</td></tr>
+          <tr><td class="round-mono">03</td><td>M. Verner</td><td class="mono">47</td></tr>
+          <tr><td class="round-mono">04</td><td>L. Knips</td><td class="mono">35</td></tr>
+          <tr><td class="round-mono">05</td><td>N. Pfeiffer</td><td class="mono">33</td></tr>
+          <tr><td class="round-mono">06</td><td>L. Nierhaus</td><td class="mono">29</td></tr>
+          <tr><td class="round-mono">07</td><td>A. Friedl</td><td class="mono">29</td></tr>
+          <tr><td class="round-mono">08</td><td>T. Engemann</td><td class="mono">27</td></tr>
+          <tr><td class="round-mono">09</td><td>M. Diaconu</td><td class="mono">24</td></tr>
+          <tr><td class="round-mono">10</td><td>Jooeell</td><td class="mono">23</td></tr>
+          <tr><td class="round-mono">11</td><td>C. Wilmott</td><td class="mono">21</td></tr>
+          <tr><td class="round-mono">12</td><td>Er. Schneider</td><td class="mono">21</td></tr>
+          <tr><td class="round-mono">13</td><td>M. Liebisch</td><td class="mono">17</td></tr>
+          <tr><td class="round-mono">14</td><td>T. Seefeldt</td><td class="mono">16</td></tr>
+          <tr><td class="round-mono">15</td><td>A. Fox</td><td class="mono">15</td></tr>
+          <tr><td class="round-mono">16</td><td>Y. Guillaume</td><td class="mono">13</td></tr>
+          <tr><td class="round-mono">17</td><td>L. Petrov</td><td class="mono">12</td></tr>
+          <tr><td class="round-mono">18</td><td>F. Hübner</td><td class="mono">11</td></tr>
+          <tr><td class="round-mono">19</td><td>S. Röber</td><td class="mono">10</td></tr>
+          <tr><td class="round-mono">20</td><td>L. Verner</td><td class="mono">9</td></tr>
+          <tr><td class="round-mono">21</td><td>D. Suess</td><td class="mono">7</td></tr>
+          <tr><td class="round-mono">22</td><td>M. Drißen</td><td class="mono">7</td></tr>
+          <tr><td class="round-mono">23</td><td>L. Fox</td><td class="mono">6</td></tr>
+          <tr><td class="round-mono">24</td><td>L. Moser</td><td class="mono">6</td></tr>
+          <tr><td class="round-mono">25</td><td>Ferrix</td><td class="mono">5</td></tr>
+          <tr><td class="round-mono">26</td><td>T. Hoffmann</td><td class="mono">3</td></tr>
+          <tr><td class="round-mono">27</td><td>C. Hölper</td><td class="mono">2</td></tr>
+          <tr><td class="round-mono">28</td><td>E. Uchuev</td><td class="mono">1</td></tr>
+          <tr><td class="round-mono">29</td><td>El. Schneider</td><td class="mono">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:20px;font-size:.85rem;color:var(--text-muted);"
+       data-de="Schnellste Runde, Rennen 1: <span class='fastest-lap'>[PLATZHALTER 0:00.000]</span>"
+       data-en="Fastest lap round 1: <span class='fastest-lap'>[PLACEHOLDER 0:00.000]</span>">
+      Schnellste Runde, Rennen 1: <span class="fastest-lap">[PLATZHALTER 0:00.000]</span>
+    </p>
+
+    <h3 style="text-transform:uppercase;font-size:1.1rem;margin:48px 0 16px;" data-de="Teams Series" data-en="Teams Series">Teams Series</h3>
+    <div class="table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th data-de="Pos" data-en="Pos">Pos</th>
+            <th data-de="Fahrer" data-en="Driver">Fahrer</th>
+            <th data-de="Punkte" data-en="Points">Punkte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="round-mono">01</td><td>C. Wilmott</td><td class="mono">87</td></tr>
+          <tr><td class="round-mono">02</td><td>E. Sprott</td><td class="mono">75</td></tr>
+          <tr><td class="round-mono">03</td><td>Y. Guillaume</td><td class="mono">65</td></tr>
+          <tr><td class="round-mono">04</td><td>N. Pfeiffer</td><td class="mono">53</td></tr>
+          <tr><td class="round-mono">05</td><td>L. Nierhaus</td><td class="mono">46</td></tr>
+          <tr><td class="round-mono">06</td><td>A. Fox</td><td class="mono">28</td></tr>
+          <tr><td class="round-mono">07</td><td>M. Verner</td><td class="mono">26</td></tr>
+          <tr><td class="round-mono">08</td><td>L. Knips</td><td class="mono">24</td></tr>
+          <tr><td class="round-mono">09</td><td>K. Böhm</td><td class="mono">24</td></tr>
+          <tr><td class="round-mono">10</td><td>L. Petrov</td><td class="mono">23</td></tr>
+          <tr><td class="round-mono">11</td><td>A. Friedl</td><td class="mono">22</td></tr>
+          <tr><td class="round-mono">12</td><td>M. Drißen</td><td class="mono">20</td></tr>
+          <tr><td class="round-mono">13</td><td>M. Ackermann</td><td class="mono">13</td></tr>
+          <tr><td class="round-mono">14</td><td>M. Dohnt</td><td class="mono">9</td></tr>
+          <tr><td class="round-mono">15</td><td>T. Engemann</td><td class="mono">9</td></tr>
+          <tr><td class="round-mono">16</td><td>T. Lüthke</td><td class="mono">8</td></tr>
+          <tr><td class="round-mono">17</td><td>S. Röber</td><td class="mono">7</td></tr>
+          <tr><td class="round-mono">18</td><td>L. Verner</td><td class="mono">6</td></tr>
+          <tr><td class="round-mono">19</td><td>L. Moser</td><td class="mono">6</td></tr>
+          <tr><td class="round-mono">20</td><td>M. Corvin</td><td class="mono">6</td></tr>
+          <tr><td class="round-mono">21</td><td>V. Böhm</td><td class="mono">5</td></tr>
+          <tr><td class="round-mono">22</td><td>D. Dridiger</td><td class="mono">4</td></tr>
+          <tr><td class="round-mono">23</td><td>J. Krauser</td><td class="mono">3</td></tr>
+          <tr><td class="round-mono">24</td><td>L. Fradl</td><td class="mono">3</td></tr>
+          <tr><td class="round-mono">25</td><td>D. Suess</td><td class="mono">3</td></tr>
+          <tr><td class="round-mono">26</td><td>M. Friedli</td><td class="mono">2</td></tr>
+          <tr><td class="round-mono">27</td><td>E. Uchuev</td><td class="mono">1</td></tr>
+          <tr><td class="round-mono">28</td><td>El. Schneider</td><td class="mono">1</td></tr>
+          <tr><td class="round-mono">29</td><td>T. Hoffmann</td><td class="mono">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:20px;font-size:.85rem;color:var(--text-muted);"
+       data-de="Schnellste Runde, Rennen 1: <span class='fastest-lap'>[PLATZHALTER 0:00.000]</span>"
+       data-en="Fastest lap round 1: <span class='fastest-lap'>[PLACEHOLDER 0:00.000]</span>">
+      Schnellste Runde, Rennen 1: <span class="fastest-lap">[PLATZHALTER 0:00.000]</span>
+    </p>
+
+    <h3 style="text-transform:uppercase;font-size:1.1rem;margin:48px 0 16px;" data-de="Team-Meisterschaft" data-en="Team Championship">Team-Meisterschaft</h3>
+    <div class="table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th data-de="Pos" data-en="Pos">Pos</th>
+            <th data-de="Team" data-en="Team">Team</th>
+            <th data-de="Punkte" data-en="Points">Punkte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="round-mono">01</td><td>Golden Dynasty</td><td class="mono">190</td></tr>
+          <tr><td class="round-mono">02</td><td>Chronos Motorsport</td><td class="mono">94</td></tr>
+          <tr><td class="round-mono">03</td><td>Toxic Racing</td><td class="mono">77</td></tr>
+          <tr><td class="round-mono">04</td><td>Silver Dynasty</td><td class="mono">51</td></tr>
+          <tr><td class="round-mono">05</td><td>Nussy Motorsport</td><td class="mono">45</td></tr>
+          <tr><td class="round-mono">06</td><td>Racing Team Langsam</td><td class="mono">44</td></tr>
+          <tr><td class="round-mono">07</td><td>LFA Kult Competition</td><td class="mono">34</td></tr>
+          <tr><td class="round-mono">08</td><td>Carbon Dynasty</td><td class="mono">22</td></tr>
+          <tr><td class="round-mono">09</td><td>Chronos Academy</td><td class="mono">9</td></tr>
+          <tr><td class="round-mono">10</td><td>Development Langsam</td><td class="mono">8</td></tr>
+          <tr><td class="round-mono">11</td><td>LuMo Racing</td><td class="mono">6</td></tr>
+          <tr><td class="round-mono">12</td><td>Toxic Academy</td><td class="mono">3</td></tr>
+          <tr><td class="round-mono">13</td><td>Cosmos Future</td><td class="mono">1</td></tr>
+          <tr><td class="round-mono">14</td><td>Toxic Psychos</td><td class="mono">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section id="rules" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="eyebrow" data-de="09 — Regelwerk" data-en="09 — Rules">09 — Regelwerk</div>
+    <h2 class="section-title" data-de="Offizielles Rennreglement" data-en="Official Racing Rules">Offizielles Rennreglement</h2>
+    <p class="section-sub" data-de="ASPL GT3 Racing Series · Saison 2 — Solo-Series und Team-Series. Gültig für Rennen über 60 Minuten mit einem Pflichtboxenstopp." data-en="ASPL GT3 Racing Series · Season 2 — Solo Series and Team Series. Applies to 60-minute races with one mandatory pit stop.">ASPL GT3 Racing Series · Saison 2 — Solo-Series und Team-Series. Gültig für Rennen über 60 Minuten mit einem Pflichtboxenstopp.</p>
+
+    <div class="rules-layout">
+      <div class="rules-toc">
+        <a href="#r1" class="rule-toc-link active" data-de="1. Grundsatz &amp; Geltungsbereich" data-en="1. Principle &amp; Scope">1. Grundsatz &amp; Geltungsbereich</a>
+        <a href="#r2" class="rule-toc-link" data-de="2. Liga-Struktur &amp; Format" data-en="2. League Structure &amp; Format">2. Liga-Struktur &amp; Format</a>
+        <a href="#r3" class="rule-toc-link" data-de="3. Allgemeine Fahrregeln" data-en="3. General Driving Rules">3. Allgemeine Fahrregeln</a>
+        <a href="#r4" class="rule-toc-link" data-de="4. Zweikämpfe &amp; Verteidigung" data-en="4. Battles &amp; Defending">4. Zweikämpfe &amp; Verteidigung</a>
+        <a href="#r5" class="rule-toc-link" data-de="5. Rennstart &amp; Runde 1" data-en="5. Race Start &amp; Lap 1">5. Rennstart &amp; Runde 1</a>
+        <a href="#r6" class="rule-toc-link" data-de="6. Track Limits" data-en="6. Track Limits">6. Track Limits</a>
+        <a href="#r7" class="rule-toc-link" data-de="7. Unsafe Rejoin" data-en="7. Unsafe Rejoin">7. Unsafe Rejoin</a>
+        <a href="#r8" class="rule-toc-link" data-de="8. Blue Flags" data-en="8. Blue Flags">8. Blue Flags</a>
+        <a href="#r9" class="rule-toc-link" data-de="9. Qualifying" data-en="9. Qualifying">9. Qualifying</a>
+        <a href="#r10" class="rule-toc-link" data-de="10. Boxenstopp-Regeln" data-en="10. Pit Stop Rules">10. Boxenstopp-Regeln</a>
+        <a href="#r11" class="rule-toc-link" data-de="11. Disconnects &amp; Technik" data-en="11. Disconnects &amp; Tech Issues">11. Disconnects &amp; Technik</a>
+        <a href="#r12" class="rule-toc-link" data-de="12. Unsportliches Verhalten" data-en="12. Unsporting Conduct">12. Unsportliches Verhalten</a>
+        <a href="#r13" class="rule-toc-link" data-de="13. Protestverfahren" data-en="13. Protest Procedure">13. Protestverfahren</a>
+        <a href="#r14" class="rule-toc-link" data-de="14. Strafenkatalog" data-en="14. Penalty Catalogue">14. Strafenkatalog</a>
+        <a href="#r15" class="rule-toc-link" data-de="15. Strafpunkte-System" data-en="15. Penalty Points System">15. Strafpunkte-System</a>
+        <a href="#r16" class="rule-toc-link" data-de="16. Steward-Ermessen" data-en="16. Steward Discretion">16. Steward-Ermessen</a>
+      </div>
+      <div>
+
+        <div class="rule-section" id="r1">
+          <h3 data-de="1. Grundsatz und Geltungsbereich" data-en="1. Principle and Scope">1. Grundsatz und Geltungsbereich</h3>
+          <p data-de="Die ASPL GT3 Racing Series steht für sauberes, respektvolles und kompetitives Simracing. Jeder Fahrer ist jederzeit für sein Fahrzeug und sein Verhalten auf der Strecke verantwortlich."
+             data-en="The ASPL GT3 Racing Series stands for clean, respectful and competitive sim racing. Every driver is responsible for their car and their conduct on track at all times.">Die ASPL GT3 Racing Series steht für sauberes, respektvolles und kompetitives Simracing. Jeder Fahrer ist jederzeit für sein Fahrzeug und sein Verhalten auf der Strecke verantwortlich.</p>
+          <p data-de="Das Reglement gilt für alle offiziellen Rennen der ASPL Solo-Series und Team-Series auf PlayStation 5 und Xbox Series in Assetto Corsa Competizione. Ziel der Liga ist hartes, aber faires Racing. Aggressive Manöver sind erlaubt, solange sie kontrolliert, nachvollziehbar und gegenüber anderen Fahrern fair bleiben."
+             data-en="These rules apply to all official ASPL Solo Series and Team Series races on PlayStation 5 and Xbox Series in Assetto Corsa Competizione. The league's goal is hard but fair racing. Aggressive moves are allowed as long as they stay controlled, predictable and fair towards other drivers.">Das Reglement gilt für alle offiziellen Rennen der ASPL Solo-Series und Team-Series auf PlayStation 5 und Xbox Series in Assetto Corsa Competizione. Ziel der Liga ist hartes, aber faires Racing. Aggressive Manöver sind erlaubt, solange sie kontrolliert, nachvollziehbar und gegenüber anderen Fahrern fair bleiben.</p>
+          <ul class="value-list">
+            <li data-de="Fairness steht vor unnötigem Risiko." data-en="Fairness comes before unnecessary risk.">Fairness steht vor unnötigem Risiko.</li>
+            <li data-de="Jeder Fahrer muss jederzeit berechenbar fahren." data-en="Every driver must remain predictable at all times.">Jeder Fahrer muss jederzeit berechenbar fahren.</li>
+            <li data-de="Die Entscheidungen der Rennleitung und Stewards sind zu respektieren." data-en="Decisions by race control and stewards must be respected.">Die Entscheidungen der Rennleitung und Stewards sind zu respektieren.</li>
+            <li data-de="Nicht jede Situation kann exakt gleich geregelt werden — die Stewards entscheiden im Einzelfall." data-en="Not every situation can be regulated identically — stewards decide on a case-by-case basis.">Nicht jede Situation kann exakt gleich geregelt werden — die Stewards entscheiden im Einzelfall.</li>
+          </ul>
+        </div>
+
+        <div class="rule-section" id="r2">
+          <h3 data-de="2. Liga-Struktur und Rennformat" data-en="2. League Structure and Race Format">2. Liga-Struktur und Rennformat</h3>
+          <h4 data-de="2.1 Serien" data-en="2.1 Series">2.1 Serien</h4>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr>
+                <th data-de="Serie" data-en="Series">Serie</th>
+                <th data-de="Wertungen" data-en="Standings">Wertungen</th>
+                <th data-de="Bemerkung" data-en="Note">Bemerkung</th>
+              </tr></thead>
+              <tbody>
+                <tr>
+                  <td>Solo-Series</td>
+                  <td data-de="Fahrerwertung" data-en="Driver standings">Fahrerwertung</td>
+                  <td data-de="Jeder Fahrer startet als Einzelfahrer." data-en="Every driver enters individually.">Jeder Fahrer startet als Einzelfahrer.</td>
+                </tr>
+                <tr>
+                  <td>Team-Series</td>
+                  <td data-de="Fahrer- und Teamwertung" data-en="Driver and team standings">Fahrer- und Teamwertung</td>
+                  <td data-de="Teamregeln und Teamstopp-Regeln sind zu beachten." data-en="Team rules and team-stop rules apply.">Teamregeln und Teamstopp-Regeln sind zu beachten.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 data-de="2.2 Standardformat" data-en="2.2 Standard Format">2.2 Standardformat</h4>
+          <ul class="value-list">
+            <li data-de="Training nach Servereinstellung" data-en="Practice per server settings">Training nach Servereinstellung</li>
+            <li data-de="Qualifying" data-en="Qualifying">Qualifying</li>
+            <li data-de="60 Minuten Rennen" data-en="60-minute race">60 Minuten Rennen</li>
+            <li data-de="1 verpflichtender Boxenstopp" data-en="1 mandatory pit stop">1 verpflichtender Boxenstopp</li>
+          </ul>
+          <div class="rule-note" data-de="Der Pflichtboxenstopp muss während des Rennens absolviert werden. Wird der Pflichtstopp nicht durchgeführt, kann dies zu einer Disqualifikation führen."
+               data-en="The mandatory pit stop must be completed during the race. Failing to do so may result in disqualification.">Der Pflichtboxenstopp muss während des Rennens absolviert werden. Wird der Pflichtstopp nicht durchgeführt, kann dies zu einer Disqualifikation führen.</div>
+          <h4 data-de="Kein manuelles Startgrid" data-en="No Manual Starting Grid">Kein manuelles Startgrid</h4>
+          <p data-de="Da das Lineup nach dem Qualifying auf der Konsole nicht manuell eingestellt werden kann, werden Qualifying-Vergehen nicht als manuelle Startplatzstrafe umgesetzt. Stattdessen können Zeitstrafen, Strafpunkte oder eine Qualifying-Sperre für das nächste Rennen ausgesprochen werden."
+             data-en="Because the console lineup can't be adjusted manually after qualifying, qualifying offenses are not enforced as manual grid penalties. Instead, time penalties, penalty points or a qualifying ban for the next race may be issued.">Da das Lineup nach dem Qualifying auf der Konsole nicht manuell eingestellt werden kann, werden Qualifying-Vergehen nicht als manuelle Startplatzstrafe umgesetzt. Stattdessen können Zeitstrafen, Strafpunkte oder eine Qualifying-Sperre für das nächste Rennen ausgesprochen werden.</p>
+        </div>
+
+        <div class="rule-section" id="r3">
+          <h3 data-de="3. Allgemeine Fahrregeln" data-en="3. General Driving Rules">3. Allgemeine Fahrregeln</h3>
+          <p data-de="Jeder Fahrer muss sein Fahrzeug jederzeit kontrollieren können. Ein Fahrfehler ist nicht automatisch ein Rennunfall, wenn dadurch ein anderer Fahrer geschädigt wird."
+             data-en="Every driver must be able to control their car at all times. A driving mistake is not automatically a racing incident just because another driver is affected by it.">Jeder Fahrer muss sein Fahrzeug jederzeit kontrollieren können. Ein Fahrfehler ist nicht automatisch ein Rennunfall, wenn dadurch ein anderer Fahrer geschädigt wird.</p>
+          <h4 data-de="3.1 Fahrzeugkontrolle" data-en="3.1 Car Control">3.1 Fahrzeugkontrolle</h4>
+          <ul class="value-list">
+            <li data-de="Unkontrollierte Angriffe oder Verteidigungen können bestraft werden." data-en="Uncontrolled attacks or defensive moves can be penalized.">Unkontrollierte Angriffe oder Verteidigungen können bestraft werden.</li>
+            <li data-de="Wer sich verbremst und einen Kontakt verursacht, trägt in der Regel die Verantwortung." data-en="A driver who misjudges a braking point and causes contact is generally held responsible.">Wer sich verbremst und einen Kontakt verursacht, trägt in der Regel die Verantwortung.</li>
+            <li data-de="Fahrer müssen ihr Tempo an Verkehr, Reifen, Spritmenge und Streckenzustand anpassen." data-en="Drivers must adapt their pace to traffic, tyres, fuel load and track conditions.">Fahrer müssen ihr Tempo an Verkehr, Reifen, Spritmenge und Streckenzustand anpassen.</li>
+          </ul>
+          <h4 data-de="3.2 Platz lassen" data-en="3.2 Leaving Room">3.2 Platz lassen</h4>
+          <p data-de="Befindet sich ein Fahrzeug signifikant neben einem anderen Fahrzeug, muss ausreichend Platz gelassen werden. Absichtliches Zudrücken oder Herausdrängen ist verboten."
+             data-en="When a car is significantly alongside another, enough room must be left. Deliberately squeezing or forcing another car off track is prohibited.">Befindet sich ein Fahrzeug signifikant neben einem anderen Fahrzeug, muss ausreichend Platz gelassen werden. Absichtliches Zudrücken oder Herausdrängen ist verboten.</p>
+        </div>
+
+        <div class="rule-section" id="r4">
+          <h3 data-de="4. Zweikämpfe und Verteidigung" data-en="4. Battles and Defending">4. Zweikämpfe und Verteidigung</h3>
+          <h4 data-de="4.1 Verteidigen" data-en="4.1 Defending">4.1 Verteidigen</h4>
+          <p data-de="Verteidigen ist erlaubt, solange es fair und berechenbar bleibt. Der verteidigende Fahrer darf eine klare defensive Linie wählen."
+             data-en="Defending is allowed as long as it stays fair and predictable. The defending driver may choose one clear defensive line.">Verteidigen ist erlaubt, solange es fair und berechenbar bleibt. Der verteidigende Fahrer darf eine klare defensive Linie wählen.</p>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Erlaubt" data-en="Allowed">Erlaubt</th><th data-de="Nicht erlaubt" data-en="Not allowed">Nicht erlaubt</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td data-de="Eine defensive Linienänderung" data-en="One defensive line change">Eine defensive Linienänderung</td>
+                  <td data-de="Mehrfaches Spurwechseln / Zick-Zack" data-en="Repeated weaving / zig-zagging">Mehrfaches Spurwechseln / Zick-Zack</td>
+                </tr>
+                <tr>
+                  <td data-de="Frühzeitiges Positionieren vor der Bremszone" data-en="Early positioning before the braking zone">Frühzeitiges Positionieren vor der Bremszone</td>
+                  <td data-de="Moving under Braking" data-en="Moving under braking">Moving under Braking</td>
+                </tr>
+                <tr>
+                  <td data-de="Sauberes Verteidigen auf der Innenlinie" data-en="Clean defending on the inside line">Sauberes Verteidigen auf der Innenlinie</td>
+                  <td data-de="Reaktionsblocken im letzten Moment" data-en="Late reactive blocking">Reaktionsblocken im letzten Moment</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 data-de="4.2 Überholen" data-en="4.2 Overtaking">4.2 Überholen</h4>
+          <p data-de="Der angreifende Fahrer trägt die Hauptverantwortung dafür, dass ein Überholmanöver sauber und kontrolliert durchgeführt wird. Ein Angriff ist nur dann sauber, wenn das Fahrzeug kontrollierbar bleibt und der Gegner nicht gezwungen wird, die Strecke zu verlassen oder eine Kollision zu vermeiden."
+             data-en="The attacking driver carries the main responsibility for making an overtake clean and controlled. An attack is only clean if the car remains controllable and the opponent isn't forced off track or into avoiding a collision.">Der angreifende Fahrer trägt die Hauptverantwortung dafür, dass ein Überholmanöver sauber und kontrolliert durchgeführt wird. Ein Angriff ist nur dann sauber, wenn das Fahrzeug kontrollierbar bleibt und der Gegner nicht gezwungen wird, die Strecke zu verlassen oder eine Kollision zu vermeiden.</p>
+          <h4 data-de="4.3 Divebombs" data-en="4.3 Divebombs">4.3 Divebombs</h4>
+          <p data-de="Eine Divebomb liegt vor, wenn der Bremspunkt unrealistisch spät gewählt wird, das Fahrzeug nicht mehr sauber kontrolliert werden kann oder Kontakt nur durch Ausweichen des anderen Fahrers verhindert wird."
+             data-en="A divebomb occurs when the braking point is chosen unrealistically late, the car can no longer be controlled cleanly, or contact is only avoided because the other driver takes evasive action.">Eine Divebomb liegt vor, wenn der Bremspunkt unrealistisch spät gewählt wird, das Fahrzeug nicht mehr sauber kontrolliert werden kann oder Kontakt nur durch Ausweichen des anderen Fahrers verhindert wird.</p>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Vergehen" data-en="Offense">Vergehen</th><th data-de="Strafe" data-en="Penalty">Strafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Unsauberer Angriff ohne Berührung" data-en="Unclean attack without contact">Unsauberer Angriff ohne Berührung</td><td data-de="+5 Sekunden möglich" data-en="+5s possible">+5 Sekunden möglich</td></tr>
+                <tr><td data-de="Divebomb mit Kontakt" data-en="Divebomb with contact">Divebomb mit Kontakt</td><td data-de="+10 Sek. und 2 Strafpunkte" data-en="+10s and 2 points">+10 Sek. und 2 Strafpunkte</td></tr>
+                <tr><td data-de="Divebomb mit schwerer Unfallfolge" data-en="Divebomb with serious crash consequence">Divebomb mit schwerer Unfallfolge</td><td data-de="+15 bis +30 Sek. oder DSQ" data-en="+15 to +30s or DSQ">+15 bis +30 Sek. oder DSQ möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r5">
+          <h3 data-de="5. Rennstart und Runde 1" data-en="5. Race Start and Lap 1">5. Rennstart und Runde 1</h3>
+          <p data-de="Die Startphase wird strenger bewertet als normale Rennsituationen. In Kurve 1 und 2 wird von allen Fahrern erhöhte Vorsicht erwartet."
+             data-en="The start phase is judged more strictly than normal race situations. In corners 1 and 2, all drivers are expected to show increased caution.">Die Startphase wird strenger bewertet als normale Rennsituationen. In Kurve 1 und 2 wird von allen Fahrern erhöhte Vorsicht erwartet.</p>
+          <ul class="value-list">
+            <li data-de="Früher bremsen als im normalen Rennbetrieb" data-en="Brake earlier than during normal racing">Früher bremsen als im normalen Rennbetrieb</li>
+            <li data-de="Ausreichend Platz lassen" data-en="Leave enough room">Ausreichend Platz lassen</li>
+            <li data-de="Keine unnötigen Divebombs" data-en="No unnecessary divebombs">Keine unnötigen Divebombs</li>
+            <li data-de="Keine riskanten Drei- oder Vierfachkämpfe erzwingen" data-en="Don't force risky three- or four-wide battles">Keine riskanten Drei- oder Vierfachkämpfe erzwingen</li>
+          </ul>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Startvergehen" data-en="Start offense">Startvergehen</th><th data-de="Zeitstrafe" data-en="Time penalty">Zeitstrafe</th><th data-de="Strafpunkte" data-en="Points">Strafpunkte</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Leichter Startkontakt" data-en="Light start contact">Leichter Startkontakt</td><td>+2s</td><td>1</td></tr>
+                <tr><td data-de="Verursachter Dreher" data-en="Causing a spin">Verursachter Dreher</td><td>+5 – 10s</td><td>2</td></tr>
+                <tr><td data-de="Massenunfall verursacht" data-en="Causing a multi-car incident">Massenunfall verursacht</td><td>+20 – 40s</td><td>4 – 6</td></tr>
+                <tr><td data-de="Rennzerstörender Startunfall" data-en="Race-ending start crash">Rennzerstörender Startunfall</td><td>DSQ möglich</td><td data-de="bis 8 möglich" data-en="up to 8 possible">bis 8 möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 data-de="5.1 Startlinie" data-en="5.1 Start Line">5.1 Startlinie</h4>
+          <p data-de="Überholen vor der offiziellen Startlinie ist nicht erlaubt. Verstoss gegen diese Regel: +10 Sekunden."
+             data-en="Overtaking before the official start line is not allowed. Violation of this rule: +10 seconds.">Überholen vor der offiziellen Startlinie ist nicht erlaubt. Verstoss gegen diese Regel: +10 Sekunden.</p>
+        </div>
+
+        <div class="rule-section" id="r6">
+          <h3 data-de="6. Track Limits" data-en="6. Track Limits">6. Track Limits</h3>
+          <p data-de="Mindestens zwei Räder müssen innerhalb der Streckenbegrenzung bleiben. Kerbs gelten als Teil der Strecke, Gras, Kies und unzulässige Auslaufzonen nicht."
+             data-en="At least two wheels must stay within track limits. Kerbs count as part of the track; grass, gravel and disallowed run-off areas do not.">Mindestens zwei Räder müssen innerhalb der Streckenbegrenzung bleiben. Kerbs gelten als Teil der Strecke, Gras, Kies und unzulässige Auslaufzonen nicht.</p>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Situation" data-en="Situation">Situation</th><th data-de="Strafe" data-en="Penalty">Strafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Geringer Vorteil durch Abkürzen" data-en="Minor advantage from cutting">Geringer Vorteil durch Abkürzen</td><td data-de="Verwarnung oder +3s" data-en="Warning or +3s">Verwarnung oder +3s</td></tr>
+                <tr><td data-de="Mehrfacher Vorteil" data-en="Repeated advantage">Mehrfacher Vorteil</td><td>+5 – 15s</td></tr>
+                <tr><td data-de="Bewusste Ausnutzung" data-en="Deliberate exploitation">Bewusste Ausnutzung</td><td data-de="+20s und Strafpunkte möglich" data-en="+20s and points possible">+20s und Strafpunkte möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r7">
+          <h3 data-de="7. Unsafe Rejoin" data-en="7. Unsafe Rejoin">7. Unsafe Rejoin</h3>
+          <p data-de="Das Zurückkommen auf die Strecke muss immer sicher erfolgen. Der Fahrer auf der Strecke hat Vorrang."
+             data-en="Rejoining the track must always be done safely. The driver already on track has priority.">Das Zurückkommen auf die Strecke muss immer sicher erfolgen. Der Fahrer auf der Strecke hat Vorrang.</p>
+          <ul class="value-list">
+            <li data-de="Nicht blind auf die Ideallinie zurückfahren" data-en="Don't rejoin blindly onto the racing line">Nicht blind auf die Ideallinie zurückfahren</li>
+            <li data-de="Erst beschleunigen, wenn genügend Platz vorhanden ist" data-en="Only accelerate once there is enough room">Erst beschleunigen, wenn genügend Platz vorhanden ist</li>
+            <li data-de="Berechenbar bleiben" data-en="Stay predictable">Berechenbar bleiben</li>
+            <li data-de="Bei Verkehr lieber kurz warten" data-en="Wait briefly rather than rejoin into traffic">Bei Verkehr lieber kurz warten</li>
+          </ul>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Rejoin-Vergehen" data-en="Rejoin offense">Rejoin-Vergehen</th><th data-de="Strafe" data-en="Penalty">Strafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Gefährlicher Rejoin ohne Unfallfolge" data-en="Dangerous rejoin without a crash">Gefährlicher Rejoin ohne Unfallfolge</td><td data-de="+10s und Strafpunkte" data-en="+10s and points">+10s und Strafpunkte</td></tr>
+                <tr><td data-de="Rejoin mit Kontakt oder Unfallfolge" data-en="Rejoin causing contact or a crash">Rejoin mit Kontakt oder Unfallfolge</td><td data-de="+15 bis +30s, ggf. mehr Strafpunkte" data-en="+15 to +30s, more points possible">+15 bis +30s, ggf. mehr Strafpunkte</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r8">
+          <h3 data-de="8. Blue Flags" data-en="8. Blue Flags">8. Blue Flags</h3>
+          <p data-de="Überrundete Fahrer müssen schnellere Fahrzeuge sicher vorbeilassen. Dabei darf nicht aktiv verteidigt oder bewusst Zeit gekostet werden. Das Überholen soll innerhalb weniger Kurven sicher ermöglicht werden. Der überrundende Fahrer muss trotzdem sauber und kontrolliert überholen."
+             data-en="Lapped drivers must safely let faster cars past. Actively defending or deliberately costing time is not allowed. Passing should be made possible safely within a few corners. The overtaking driver must still pass cleanly and under control.">Überrundete Fahrer müssen schnellere Fahrzeuge sicher vorbeilassen. Dabei darf nicht aktiv verteidigt oder bewusst Zeit gekostet werden. Das Überholen soll innerhalb weniger Kurven sicher ermöglicht werden. Der überrundende Fahrer muss trotzdem sauber und kontrolliert überholen.</p>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Blue-Flag-Situation" data-en="Blue flag situation">Blue-Flag-Situation</th><th data-de="Zeitstrafe" data-en="Time penalty">Zeitstrafe</th><th data-de="Strafpunkte" data-en="Points">Strafpunkte</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Leichtes Behindern" data-en="Minor obstruction">Leichtes Behindern</td><td>+5s</td><td>1</td></tr>
+                <tr><td data-de="Aktives Blockieren oder Verteidigen" data-en="Active blocking or defending">Aktives Blockieren oder Verteidigen</td><td>+10 – 20s</td><td>2</td></tr>
+                <tr><td data-de="Mehrfaches oder absichtliches Aufhalten" data-en="Repeated or deliberate holding-up">Mehrfaches oder absichtliches Aufhalten</td><td data-de="+20s oder mehr" data-en="+20s or more">+20s oder mehr</td><td data-de="4 möglich" data-en="4 possible">4 möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r9">
+          <h3 data-de="9. Qualifying" data-en="9. Qualifying">9. Qualifying</h3>
+          <p data-de="Im Qualifying gilt besondere Rücksicht. Fahrer auf schnellen Runden haben Vorrang gegenüber Fahrern auf Outlaps, Inlaps oder abgebrochenen Runden."
+             data-en="Special care applies in qualifying. Drivers on a fast lap have priority over drivers on out-laps, in-laps or aborted laps.">Im Qualifying gilt besondere Rücksicht. Fahrer auf schnellen Runden haben Vorrang gegenüber Fahrern auf Outlaps, Inlaps oder abgebrochenen Runden.</p>
+          <ul class="value-list">
+            <li data-de="Nicht auf der Ideallinie langsam fahren" data-en="Don't drive slowly on the racing line">Nicht auf der Ideallinie langsam fahren</li>
+            <li data-de="Spiegel und Abstandsanzeige beachten" data-en="Watch mirrors and the gap indicator">Spiegel und Abstandsanzeige beachten</li>
+            <li data-de="Platz früh und berechenbar machen" data-en="Make room early and predictably">Platz früh und berechenbar machen</li>
+            <li data-de="Keine schnellen Runden anderer Fahrer blockieren" data-en="Don't block other drivers' fast laps">Keine schnellen Runden anderer Fahrer blockieren</li>
+          </ul>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Qualifying-Vergehen" data-en="Qualifying offense">Qualifying-Vergehen</th><th data-de="Mögliche Strafe" data-en="Possible penalty">Mögliche Strafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Leichte Behinderung" data-en="Minor obstruction">Leichte Behinderung</td><td data-de="+5s im Rennen oder Verwarnung" data-en="+5s in the race or warning">+5s im Rennen oder Verwarnung</td></tr>
+                <tr><td data-de="Klare Behinderung einer schnellen Runde" data-en="Clear obstruction of a fast lap">Klare Behinderung einer schnellen Runde</td><td data-de="+5 bis +15s im Rennen, ggf. Strafpunkte" data-en="+5 to +15s in the race, points possible">+5 bis +15s im Rennen, ggf. Strafpunkte</td></tr>
+                <tr><td data-de="Absichtliche/massive Behinderung" data-en="Deliberate / severe obstruction">Absichtliche/massive Behinderung</td><td data-de="Hohe Zeitstrafe, Strafpunkte oder Quali-Sperre" data-en="Heavy time penalty, points or qualifying ban">Hohe Zeitstrafe, Strafpunkte oder Quali-Sperre</td></tr>
+                <tr><td data-de="Teleportation in die Garage" data-en="Teleporting to the garage">Teleportation in die Garage</td><td data-de="Strafpunkte oder Quali-Sperre möglich" data-en="Points or qualifying ban possible">Strafpunkte oder Quali-Sperre möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:.85rem;" data-de="Qualifying-Bonuspunkte: P1 = 3 Punkte, P2 = 2 Punkte, P3 = 1 Punkt." data-en="Qualifying bonus points: P1 = 3 points, P2 = 2 points, P3 = 1 point.">Qualifying-Bonuspunkte: P1 = 3 Punkte, P2 = 2 Punkte, P3 = 1 Punkt.</p>
+        </div>
+
+        <div class="rule-section" id="r10">
+          <h3 data-de="10. Boxenstopp-Regeln" data-en="10. Pit Stop Rules">10. Boxenstopp-Regeln</h3>
+          <p data-de="In jedem 60-Minuten-Saisonrennen muss ein verpflichtender Boxenstopp durchgeführt werden. Dieser kann jederzeit absolviert werden. Es muss getankt werden und die Standzeit ist auf mindestens 25 Sekunden begrenzt. In der Team-Series darf pro Team immer nur ein Fahrer gleichzeitig seinen Pflichtboxenstopp absolvieren."
+             data-en="Every 60-minute season race requires one mandatory pit stop, which can be taken at any time. Refuelling is required and the minimum stationary time is 25 seconds. In the Team Series, only one driver per team may take their mandatory stop at a time.">In jedem 60-Minuten-Saisonrennen muss ein verpflichtender Boxenstopp durchgeführt werden. Dieser kann jederzeit absolviert werden. Es muss getankt werden und die Standzeit ist auf mindestens 25 Sekunden begrenzt. In der Team-Series darf pro Team immer nur ein Fahrer gleichzeitig seinen Pflichtboxenstopp absolvieren.</p>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Vergehen" data-en="Offense">Vergehen</th><th data-de="Strafe" data-en="Penalty">Strafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Pflichtboxenstopp nicht absolviert" data-en="Mandatory pit stop not completed">Pflichtboxenstopp nicht absolviert</td><td data-de="DSQ und 2 Strafpunkte möglich" data-en="DSQ and 2 points possible">DSQ und 2 Strafpunkte möglich</td></tr>
+                <tr><td data-de="Boxenlinie überfahren" data-en="Crossing the pit line">Boxenlinie überfahren</td><td>+5s</td></tr>
+                <tr><td data-de="Unsafe Release" data-en="Unsafe release">Unsafe Release</td><td data-de="+5s und Strafpunkte" data-en="+5s and points">+5s und Strafpunkte</td></tr>
+                <tr><td data-de="Gleichzeitiger Boxenstopp im Team" data-en="Simultaneous team pit stop">Gleichzeitiger Boxenstopp im Team</td><td data-de="+30s für alle beteiligten Fahrer" data-en="+30s for all drivers involved">+30s für alle beteiligten Fahrer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r11">
+          <h3 data-de="11. Disconnects und technische Probleme" data-en="11. Disconnects and Technical Issues">11. Disconnects und technische Probleme</h3>
+          <p data-de="Jeder Fahrer ist selbst für seine Verbindung, Hardware und Software verantwortlich. Disconnects führen grundsätzlich nicht zu einem Neustart. Ausnahmen sind nur möglich, wenn ein technisches Problem nachweislich einen grossen Teil des Feldes betrifft und die Rennleitung dies klar entscheidet."
+             data-en="Every driver is responsible for their own connection, hardware and software. Disconnects generally do not result in a restart. Exceptions are only possible if a technical issue demonstrably affects a large part of the field and race control clearly rules so.">Jeder Fahrer ist selbst für seine Verbindung, Hardware und Software verantwortlich. Disconnects führen grundsätzlich nicht zu einem Neustart. Ausnahmen sind nur möglich, wenn ein technisches Problem nachweislich einen grossen Teil des Feldes betrifft und die Rennleitung dies klar entscheidet.</p>
+          <h4 data-de="11.1 Fahrzeugwahl" data-en="11.1 Car Choice">11.1 Fahrzeugwahl</h4>
+          <p data-de="Pro Fahrer ist für die komplette Saison nur ein Fahrzeugmodell erlaubt. Ein nicht genehmigter Fahrzeugwechsel führt zur Disqualifikation im betroffenen Rennen."
+             data-en="Each driver is only allowed one car model for the entire season. An unapproved car change results in disqualification from the affected race.">Pro Fahrer ist für die komplette Saison nur ein Fahrzeugmodell erlaubt. Ein nicht genehmigter Fahrzeugwechsel führt zur Disqualifikation im betroffenen Rennen.</p>
+        </div>
+
+        <div class="rule-section" id="r12">
+          <h3 data-de="12. Unsportliches Verhalten" data-en="12. Unsporting Conduct">12. Unsportliches Verhalten</h3>
+          <p data-de="Unsportliches Verhalten wird in der ASPL nicht toleriert. Dazu gehören absichtliche Aktionen auf der Strecke sowie respektloses Verhalten im Discord."
+             data-en="Unsporting conduct is not tolerated in ASPL. This includes deliberate on-track actions as well as disrespectful behaviour on Discord.">Unsportliches Verhalten wird in der ASPL nicht toleriert. Dazu gehören absichtliche Aktionen auf der Strecke sowie respektloses Verhalten im Discord.</p>
+          <ul class="value-list">
+            <li data-de="Absichtliches Rammen" data-en="Deliberate ramming">Absichtliches Rammen</li>
+            <li data-de="Revenge-Aktionen" data-en="Revenge actions">Revenge-Aktionen</li>
+            <li data-de="Brake Testing" data-en="Brake testing">Brake Testing</li>
+            <li data-de="Absichtliches Crashen" data-en="Deliberate crashing">Absichtliches Crashen</li>
+            <li data-de="Beleidigungen oder Provokationen" data-en="Insults or provocations">Beleidigungen oder Provokationen</li>
+            <li data-de="Öffentliches Shaming anderer Fahrer" data-en="Publicly shaming other drivers">Öffentliches Shaming anderer Fahrer</li>
+            <li data-de="Teleportation in die Garage im Qualifying oder Rennen" data-en="Teleporting to the garage during qualifying or the race">Teleportation in die Garage im Qualifying oder Rennen</li>
+            <li data-de="Ragequit / absichtliches Verlassen des Rennens" data-en="Ragequit / deliberately leaving the race">Ragequit / absichtliches Verlassen des Rennens</li>
+          </ul>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Vergehen" data-en="Offense">Vergehen</th><th data-de="Strafe" data-en="Penalty">Strafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Absichtliches Rammen" data-en="Deliberate ramming">Absichtliches Rammen</td><td data-de="DSQ und 5 Strafpunkte" data-en="DSQ and 5 points">DSQ und 5 Strafpunkte</td></tr>
+                <tr><td data-de="Wiederholtes aggressives Verhalten" data-en="Repeated aggressive behaviour">Wiederholtes aggressives Verhalten</td><td data-de="+20s und 3 Strafpunkte" data-en="+20s and 3 points">+20s und 3 Strafpunkte</td></tr>
+                <tr><td data-de="Extremfälle" data-en="Extreme cases">Extremfälle</td><td data-de="Rennsperre oder Liga-Ausschluss möglich" data-en="Race ban or league exclusion possible">Rennsperre oder Liga-Ausschluss möglich</td></tr>
+                <tr><td data-de="Teleportation in die Garage" data-en="Teleporting to the garage">Teleportation in die Garage</td><td data-de="Quali-Strafe bis DSQ, 2–3 Strafpunkte möglich" data-en="Qualifying penalty up to DSQ, 2–3 points possible">Quali-Strafe bis DSQ, 2–3 Strafpunkte möglich</td></tr>
+                <tr><td>Ragequit</td><td data-de="2 Strafpunkte, bei Wiederholung Rennsperre möglich" data-en="2 points, race ban possible on repeat">2 Strafpunkte, bei Wiederholung Rennsperre möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r13">
+          <h3 data-de="13. Protestverfahren" data-en="13. Protest Procedure">13. Protestverfahren</h3>
+          <p data-de="Proteste werden ausschliesslich über das offizielle Ticket-System eingereicht. Öffentliche ernste Diskussionen über Vorfälle oder Strafen sind nicht erlaubt."
+             data-en="Protests are submitted exclusively through the official ticket system. Serious public discussion of incidents or penalties is not allowed.">Proteste werden ausschliesslich über das offizielle Ticket-System eingereicht. Öffentliche ernste Diskussionen über Vorfälle oder Strafen sind nicht erlaubt.</p>
+          <h4 data-de="13.1 Voraussetzungen" data-en="13.1 Requirements">13.1 Voraussetzungen</h4>
+          <ul class="value-list">
+            <li data-de="Einreichung innerhalb von 24 Stunden nach Rennende" data-en="Submission within 24 hours of the race ending">Einreichung innerhalb von 24 Stunden nach Rennende</li>
+            <li data-de="Replay-Zeitangabe erforderlich" data-en="Replay timestamp required">Replay-Zeitangabe erforderlich</li>
+            <li data-de="Kurze und sachliche Beschreibung des Vorfalls" data-en="Short, factual description of the incident">Kurze und sachliche Beschreibung des Vorfalls</li>
+            <li data-de="Keine öffentlichen Schuldzuweisungen" data-en="No public blaming">Keine öffentlichen Schuldzuweisungen</li>
+          </ul>
+          <p data-de="Die Entscheidung der Stewards ist final. Rückfragen sind sachlich möglich, Diskussionen oder Provokationen werden nicht akzeptiert."
+             data-en="The stewards' decision is final. Factual follow-up questions are possible; discussions or provocations are not accepted.">Die Entscheidung der Stewards ist final. Rückfragen sind sachlich möglich, Diskussionen oder Provokationen werden nicht akzeptiert.</p>
+        </div>
+
+        <div class="rule-section" id="r14">
+          <h3 data-de="14. Strafenkatalog" data-en="14. Penalty Catalogue">14. Strafenkatalog</h3>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Kategorie" data-en="Category">Kategorie</th><th data-de="Beschreibung" data-en="Description">Beschreibung</th><th data-de="Standardstrafe" data-en="Standard penalty">Standardstrafe</th></tr></thead>
+              <tbody>
+                <tr><td data-de="Leichte Kollision" data-en="Minor collision">Leichte Kollision</td><td data-de="Kein Dreher, geringer Zeitverlust, leichtes Abdrängen" data-en="No spin, minor time loss, slight push">Kein Dreher, geringer Zeitverlust, leichtes Abdrängen</td><td data-de="+3s und 0–1 Punkt" data-en="+3s and 0–1 point">+3s und 0–1 Punkt</td></tr>
+                <tr><td data-de="Mittlere Kollision" data-en="Medium collision">Mittlere Kollision</td><td data-de="Dreher oder deutlicher Zeitverlust" data-en="Spin or significant time loss">Dreher oder deutlicher Zeitverlust</td><td data-de="+5 bis +15s und 2 Punkte" data-en="+5 to +15s and 2 points">+5 bis +15s und 2 Punkte</td></tr>
+                <tr><td data-de="Schwere Kollision" data-en="Severe collision">Schwere Kollision</td><td data-de="Starker Schaden oder mehrere Fahrzeuge betroffen" data-en="Heavy damage or multiple cars affected">Starker Schaden oder mehrere Fahrzeuge betroffen</td><td data-de="+20s und 3–4 Punkte" data-en="+20s and 3–4 points">+20s und 3–4 Punkte</td></tr>
+                <tr><td data-de="Rennentscheidende Kollision" data-en="Race-deciding collision">Rennentscheidende Kollision</td><td data-de="Rennen eines Fahrers stark beschädigt oder zerstört" data-en="A driver's race severely damaged or ended">Rennen eines Fahrers stark beschädigt oder zerstört</td><td data-de="+20 bis +60s oder DSQ, 5 Punkte möglich" data-en="+20 to +60s or DSQ, 5 points possible">+20 bis +60s oder DSQ, 5 Punkte möglich</td></tr>
+                <tr><td>Unsafe Rejoin</td><td data-de="Gefährliches Zurückkommen auf die Strecke" data-en="Dangerous rejoin onto the track">Gefährliches Zurückkommen auf die Strecke</td><td data-de="+5 bis +30s und Strafpunkte" data-en="+5 to +30s and points">+5 bis +30s und Strafpunkte</td></tr>
+                <tr><td>Blue Flags</td><td data-de="Aufhalten oder Blockieren unter blauer Flagge" data-en="Holding up or blocking under blue flag">Aufhalten oder Blockieren unter blauer Flagge</td><td data-de="+5 bis +20s, mind. 1 Punkt" data-en="+5 to +20s, min. 1 point">+5 bis +20s, mind. 1 Punkt</td></tr>
+                <tr><td>Track Limits</td><td data-de="Vorteil durch Abkürzen" data-en="Advantage from cutting">Vorteil durch Abkürzen</td><td data-de="+3 bis +20s, ggf. Strafpunkte" data-en="+3 to +20s, points possible">+3 bis +20s, ggf. Strafpunkte</td></tr>
+                <tr><td data-de="Boxenvergehen" data-en="Pit offense">Boxenvergehen</td><td data-de="Unsafe Release, Boxenlinie, Teamstopp-Verstoss" data-en="Unsafe release, pit line, team-stop violation">Unsafe Release, Boxenlinie, Teamstopp-Verstoss</td><td>+5 bis +30s</td></tr>
+                <tr><td data-de="Unsportliches Verhalten" data-en="Unsporting conduct">Unsportliches Verhalten</td><td data-de="Absichtliches Rammen, toxisches Verhalten" data-en="Deliberate ramming, toxic behaviour">Absichtliches Rammen, toxisches Verhalten</td><td data-de="DSQ, Sperre oder Ausschluss möglich" data-en="DSQ, ban or exclusion possible">DSQ, Sperre oder Ausschluss möglich</td></tr>
+                <tr><td data-de="Fahrzeugwechsel" data-en="Car change">Fahrzeugwechsel</td><td data-de="Unerlaubter Wechsel des Fahrzeugmodells während der Saison" data-en="Unauthorized car model change during the season">Unerlaubter Wechsel des Fahrzeugmodells während der Saison</td><td data-de="DSQ im betroffenen Rennen" data-en="DSQ in the affected race">DSQ im betroffenen Rennen</td></tr>
+                <tr><td>Garage-Teleport</td><td data-de="Teleportation in die Garage im Qualifying oder Rennen" data-en="Teleporting to the garage during qualifying or the race">Teleportation in die Garage im Qualifying oder Rennen</td><td data-de="Streichung der Runde, DSQ, 2–3 Punkte möglich" data-en="Lap deleted, DSQ, 2–3 points possible">Streichung der Runde, DSQ, 2–3 Punkte möglich</td></tr>
+                <tr><td>Ragequit</td><td data-de="Absichtliches Verlassen des Rennens aus Frust" data-en="Deliberately leaving the race out of frustration">Absichtliches Verlassen des Rennens aus Frust</td><td data-de="2 Punkte, bei Wiederholung Rennsperre möglich" data-en="2 points, race ban possible on repeat">2 Punkte, bei Wiederholung Rennsperre möglich</td></tr>
+                <tr><td data-de="Unentschuldigtes Fehlen" data-en="Unexcused absence">Unentschuldigtes Fehlen</td><td data-de="Angemeldet, aber nicht erschienen" data-en="Registered but did not show up">Angemeldet/vom Teamchef angemeldet, aber nicht erschienen</td><td>2 <span data-de="Punkte" data-en="points">Punkte</span></td></tr>
+                <tr><td data-de="Team An-/Abmeldung fehlt" data-en="Missing team sign-in/out">Team An-/Abmeldung fehlt</td><td data-de="Team wurde nicht rechtzeitig bis 1 Stunde vor Beginn gemeldet" data-en="Team not reported at least 1 hour before the start">Team wurde nicht rechtzeitig bis 1 Stunde vor Beginn vom Team/Co-Teamchef gemeldet</td><td data-de="Verwarnung, bei Wiederholung Punktabzug" data-en="Warning, points deducted on repeat">Verwarnung, bei mehrfachem Vergehen Punktabzug</td></tr>
+                <tr><td data-de="Anmeldung nach Anmeldefrist" data-en="Late registration">Anmeldung nach Anmeldefrist</td><td data-de="Anmeldung in der letzten Stunde vor dem Rennen" data-en="Registration within the last hour before the race">Anmeldung in der letzten Stunde vor dem Rennen</td><td data-de="Quali-Sperre" data-en="Qualifying ban">Quali-Sperre</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rule-section" id="r15">
+          <h3 data-de="15. Strafpunkte-System" data-en="15. Penalty Points System">15. Strafpunkte-System</h3>
+          <p data-de="Das Strafpunkte-System bleibt wie im bisherigen ASPL-Reglement bestehen. Strafpunkte bleiben für die gesamte Saison aktiv."
+             data-en="The penalty points system remains as in the previous ASPL rules. Penalty points stay active for the entire season.">Das Strafpunkte-System bleibt wie im bisherigen ASPL-Reglement bestehen. Strafpunkte bleiben für die gesamte Saison aktiv.</p>
+          <div class="rule-table-wrap">
+            <table>
+              <thead><tr><th data-de="Strafpunkte" data-en="Penalty points">Strafpunkte</th><th data-de="Konsequenz" data-en="Consequence">Konsequenz</th></tr></thead>
+              <tbody>
+                <tr><td data-de="3 Punkte" data-en="3 points">3 Punkte</td><td data-de="Offizielle Verwarnung" data-en="Official warning">Offizielle Verwarnung</td></tr>
+                <tr><td data-de="6 Punkte" data-en="6 points">6 Punkte</td><td data-de="Qualifying-Sperre" data-en="Qualifying ban">Qualifying-Sperre</td></tr>
+                <tr><td data-de="9 Punkte" data-en="9 points">9 Punkte</td><td data-de="Rennsperre" data-en="Race ban">Rennsperre</td></tr>
+                <tr><td data-de="12 Punkte" data-en="12 points">12 Punkte</td><td data-de="Liga-Ausschluss möglich" data-en="League exclusion possible">Liga-Ausschluss möglich</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 data-de="Umsetzung Qualifying-Sperre" data-en="How the Qualifying Ban Works">Umsetzung Qualifying-Sperre</h4>
+          <p data-de="Da das Startgrid nach dem Qualifying nicht manuell angepasst werden kann, bedeutet eine Qualifying-Sperre, dass der betroffene Fahrer am nächsten Qualifying nicht teilnehmen darf. Dadurch startet er automatisch ohne gesetzte Qualifying-Zeit weiter hinten."
+             data-en="Since the starting grid can't be adjusted manually after qualifying, a qualifying ban means the affected driver may not take part in the next qualifying session. As a result, they automatically start further back with no qualifying time set.">Da das Startgrid nach dem Qualifying nicht manuell angepasst werden kann, bedeutet eine Qualifying-Sperre, dass der betroffene Fahrer am nächsten Qualifying nicht teilnehmen darf. Dadurch startet er automatisch ohne gesetzte Qualifying-Zeit weiter hinten.</p>
+        </div>
+
+        <div class="rule-section" id="r16">
+          <h3 data-de="16. Steward-Ermessen und Schlussbestimmungen" data-en="16. Steward Discretion and Final Provisions">16. Steward-Ermessen und Schlussbestimmungen</h3>
+          <p data-de="Nicht jede Rennsituation kann vollständig in festen Tabellen geregelt werden. Die Stewards dürfen Strafen anpassen, wenn die Situation dies erfordert."
+             data-en="Not every race situation can be fully covered by fixed tables. Stewards may adjust penalties where the situation requires it.">Nicht jede Rennsituation kann vollständig in festen Tabellen geregelt werden. Die Stewards dürfen Strafen anpassen, wenn die Situation dies erfordert.</p>
+          <ul class="value-list">
+            <li data-de="Wiederholungstäter können härter bewertet werden." data-en="Repeat offenders can be judged more harshly.">Wiederholungstäter können härter bewertet werden.</li>
+            <li data-de="Freiwilliges Warten nach einer selbst verursachten Kollision kann strafmildernd berücksichtigt werden." data-en="Voluntarily waiting after a self-caused collision can be considered a mitigating factor.">Freiwilliges Warten nach einer selbst verursachten Kollision kann strafmildernd berücksichtigt werden.</li>
+            <li data-de="Absicht, Schaden, Kontrollverlust und Rennsituation werden gemeinsam bewertet." data-en="Intent, damage, loss of control and race context are assessed together.">Absicht, Schaden, Kontrollverlust und Rennsituation werden gemeinsam bewertet.</li>
+            <li data-de="Die finale Entscheidung liegt immer bei der Rennleitung." data-en="The final decision always rests with race control.">Die finale Entscheidung liegt immer bei der Rennleitung.</li>
+          </ul>
+          <p data-de="Dieses Reglement soll faire Rennen ermöglichen, konstante Standards schaffen und die Qualität der ASPL langfristig verbessern. Fairness, Respekt und gesunder Menschenverstand stehen jederzeit im Vordergrund."
+             data-en="These rules are designed to enable fair racing, create consistent standards and improve the quality of ASPL over the long term. Fairness, respect and common sense always come first.">Dieses Reglement soll faire Rennen ermöglichen, konstante Standards schaffen und die Qualität der ASPL langfristig verbessern. Fairness, Respekt und gesunder Menschenverstand stehen jederzeit im Vordergrund.</p>
+        </div>
+
+        <p style="font-size:.78rem;color:var(--text-muted);">
+          <span data-de="Reglement-Version:" data-en="Ruleset version:">Reglement-Version:</span> 1.0 ·
+          <span data-de="Plattformen: PlayStation 5 &amp; Xbox Series" data-en="Platforms: PlayStation 5 &amp; Xbox Series">Plattformen: PlayStation 5 &amp; Xbox Series</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN ============ -->
+<section id="join" class="join-section">
+  <div class="container">
+    <div class="eyebrow" data-de="10 — Rekrutierung" data-en="10 — Recruitment">10 — Rekrutierung</div>
+    <h2 class="section-title" data-de="Race mit ASPL" data-en="Race With ASPL">Race mit ASPL</h2>
+    <p class="section-sub" data-de="Racing ernst gemeint? Das brauchst du dafür." data-en="Serious about your racing? Here's what it takes.">Racing ernst gemeint? Das brauchst du dafür.</p>
+
+    <div class="join-columns" style="margin-top:8px;">
+      <div class="join-col expect">
+        <h4 data-de="Was wir erwarten" data-en="What we expect">Was wir erwarten</h4>
+        <ul>
+          <li data-de="Reifheit auf der Strecke." data-en="Racecraft maturity on track.">Reifheit auf der Strecke.</li>
+          <li data-de="Stabile Internetverbindung." data-en="Stable internet connection.">Stabile Internetverbindung.</li>
+          <li data-de="Verständnis für die Basics des Simracings." data-en="Understanding of sim racing basics.">Verständnis für die Basics des Simracings.</li>
+        </ul>
+      </div>
+      <div class="join-col offer">
+        <h4 data-de="Was wir bieten" data-en="What we offer">Was wir bieten</h4>
+        <ul>
+          <li data-de="Eine strukturierte, gestewardete kompetitive Serie." data-en="A structured, stewarded competitive series.">Eine strukturierte, gestewardete kompetitive Serie.</li>
+          <li data-de="Ein Team-Umfeld — Motorsport-, Omega- und Academy-Level für unterschiedliche Erfahrungsstufen." data-en="A team environment — Motorsport, Omega-level and Academy paths for different experience levels.">Ein Team-Umfeld — Motorsport-, Omega- und Academy-Level für unterschiedliche Erfahrungsstufen.</li>
+          <li data-de="Saisontabellen, Meisterschaften und Anerkennung." data-en="Season standings, championships and recognition.">Saisontabellen, Meisterschaften und Anerkennung.</li>
+          <li data-de="Eine aktive Community mit über 200 Mitgliedern." data-en="An active racing community of 200+ members.">Eine aktive Community mit über 200 Mitgliedern.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin:48px 0;">
+      <a href="https://discord.gg/PQgqZDWqk2" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:1.1rem;padding:18px 40px;"
+         data-de="Unserem Discord beitreten" data-en="Join our Discord">
+        Unserem Discord beitreten
+      </a>
+    </div>
+
+    <div style="max-width:760px;margin:0 auto;">
+      <div class="accordion-item open">
+        <div class="accordion-header" data-de="Kostet der Beitritt etwas?" data-en="Does it cost anything to join?">Kostet der Beitritt etwas?</div>
+        <div class="accordion-body"><div class="accordion-body-inner" data-de="Nein, die Liga ist komplett kostenlos." data-en="No, the league is completely free.">Nein, die Liga ist komplett kostenlos.</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" data-de="Welche Voraussetzungen gibt es für eine Bewerbung?" data-en="What are the requirements to apply?">Welche Voraussetzungen gibt es für eine Bewerbung?</div>
+        <div class="accordion-body"><div class="accordion-body-inner" data-de="Eine Kopie von Assetto Corsa Competizione, eine Pace nahe unserem Benchmark und ein funktionierendes Mikrofon für die Rennkommunikation." data-en="A copy of Assetto Corsa Competizione, a pace close to our benchmark times, and a working mic for race communications.">Eine Kopie von Assetto Corsa Competizione, eine Pace nahe unserem Benchmark und ein funktionierendes Mikrofon für die Rennkommunikation.</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" data-de="In welcher Zeitzone fährt ASPL?" data-en="What timezone does ASPL race in?">In welcher Zeitzone fährt ASPL?</div>
+        <div class="accordion-body"><div class="accordion-body-inner" data-de="Wir fahren nach deutscher Zeit (MEZ/MESZ)." data-en="We race on German time (CET/CEST).">Wir fahren nach deutscher Zeit (MEZ/MESZ).</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" data-de="Brauche ich eigene Setups?" data-en="Do I need my own car setups?">Brauche ich eigene Setups?</div>
+        <div class="accordion-body"><div class="accordion-body-inner" data-de="Nein, eigene Setups sind nicht erforderlich. Wer möchte, kann trotzdem eigene Setups verwenden." data-en="No, your own setups aren't required. If you want, you're still free to use your own.">Nein, eigene Setups sind nicht erforderlich. Wer möchte, kann trotzdem eigene Setups verwenden.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/branding/logo.png" alt="ASPL Racing Series">
+        <p data-de="Von Fahrern, für Fahrer." data-en="Made by drivers, for drivers.">Von Fahrern, für Fahrer.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-de="Liga" data-en="League">Liga</h5>
+        <a href="#about" data-de="Über uns" data-en="About">Über uns</a>
+        <a href="#series" data-de="Solo Series" data-en="Solo Series">Solo Series</a>
+        <a href="#teams" data-de="Teams" data-en="Teams">Teams</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-de="Racing" data-en="Racing">Racing</h5>
+        <a href="#schedule" data-de="Rennkalender" data-en="Schedule">Rennkalender</a>
+        <a href="#results" data-de="Ergebnisse" data-en="Results">Ergebnisse</a>
+        <a href="#rules" data-de="Regelwerk" data-en="Rules">Regelwerk</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-de="Community" data-en="Community">Community</h5>
+        <a href="#join" data-de="Beitreten / Bewerben" data-en="Join / Apply">Beitreten / Bewerben</a>
+        <a href="https://discord.gg/PQgqZDWqk2" target="_blank" rel="noopener" data-de="Discord" data-en="Discord">Discord</a>
+        <a href="https://www.youtube.com/@ASPLKonsole" target="_blank" rel="noopener" data-de="YouTube" data-en="YouTube">YouTube</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-de="© 2026 ASPL Racing Series. Nicht verbunden mit Kunos Simulazioni, Ferrari, Mercedes-AMG oder Aston Martin." data-en="© 2026 ASPL Racing Series. Not affiliated with Kunos Simulazioni, Ferrari, Mercedes-AMG or Aston Martin.">© 2026 ASPL Racing Series. Nicht verbunden mit Kunos Simulazioni, Ferrari, Mercedes-AMG oder Aston Martin.</span>
+      <span>
+        <a href="#impressum" style="color:var(--text-muted);" data-de="Impressum" data-en="Legal Notice">Impressum</a> ·
+        <a href="#privacy" style="color:var(--text-muted);" data-de="Datenschutz" data-en="Privacy">Datenschutz</a>
+      </span>
+    </div>
+    <div class="footer-credit">
+      <span data-de="Website entwickelt von" data-en="Website built by">Website entwickelt von</span>
+      <span style="color:var(--text-primary);font-weight:600;">Nussy Development</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ LEGAL ============ -->
+<section id="impressum" class="legal-section">
+  <div class="container">
+    <h3 data-de="Impressum" data-en="Legal Notice">Impressum</h3>
+    <p data-de="Name: Manoa Verner<br>Anschrift: –<br>Kontakt: Djlowtom auf Discord oder asplkonsole@gmail.com" data-en="Name: Manoa Verner<br>Address: –<br>Contact: Djlowtom on Discord or asplkonsole@gmail.com">Name: Manoa Verner<br>Anschrift: –<br>Kontakt: Djlowtom auf Discord oder asplkonsole@gmail.com</p>
+  </div>
+</section>
+<section id="privacy" class="legal-section" style="border-bottom:none;">
+  <div class="container">
+    <h3 data-de="Datenschutzerklärung" data-en="Privacy Policy">Datenschutzerklärung</h3>
+    <p data-de="Diese Website sammelt keine Cookies und keine personenbezogenen Daten von Besuchern." data-en="This website does not collect any cookies or personal data from visitors.">Diese Website sammelt keine Cookies und keine personenbezogenen Daten von Besuchern.</p>
+  </div>
+</section>
+
+<script>
+// ---- Language toggle ----
+function applyLang(lang){
+  document.querySelectorAll('[data-de]').forEach(el => {
+    const val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-de');
+    if(val !== null){ el.innerHTML = val; }
+  });
+  document.documentElement.setAttribute('lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+  try{ localStorage.setItem('aspl-lang', lang); }catch(e){}
+}
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+});
+let initialLang = 'de';
+try{ initialLang = localStorage.getItem('aspl-lang') || 'de'; }catch(e){}
+applyLang(initialLang);
+
+// ---- Scroll progress rail ----
+const scrollRail = document.getElementById('scroll-rail');
+function updateRail(){
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  scrollRail.style.setProperty('--progress', scrolled + '%');
+}
+window.addEventListener('scroll', updateRail);
+updateRail();
+
+// ---- Header solid on scroll ----
+const header = document.getElementById('site-header');
+function onScroll(){
+  if(window.scrollY > 40){ header.classList.add('solid'); } else { header.classList.remove('solid'); }
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+
+// ---- Mobile menu ----
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const closeMenuBtn = document.getElementById('close-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburgerBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+// ---- Active nav link on scroll ----
+const sections = ['series','teams','schedule','results','rules','join'].map(id => document.getElementById(id)).filter(Boolean);
+const navLinks = document.querySelectorAll('.nav-links a');
+function updateActiveNav(){
+  let current = '';
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 120 && rect.bottom > 120){ current = sec.id; }
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+// ---- Rules TOC active state ----
+const ruleLinks = document.querySelectorAll('.rule-toc-link');
+const ruleSections = ['r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','r13','r14','r15','r16'].map(id => document.getElementById(id));
+function updateRuleToc(){
+  let current = '';
+  ruleSections.forEach(sec => {
+    if(sec){
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= 200){ current = sec.id; }
+    }
+  });
+  ruleLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateRuleToc);
+updateRuleToc();
+
+// ---- Accordion ----
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    const wasOpen = item.classList.contains('open');
+    item.parentElement.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+    if(!wasOpen){ item.classList.add('open'); }
+  });
+});
+
+// ---- Stat count-up ----
+const statNums = document.querySelectorAll('.stat-num[data-count]');
+let statsAnimated = false;
+function animateStats(){
+  if(statsAnimated) return;
+  const statBar = document.querySelector('.stat-bar');
+  const rect = statBar.getBoundingClientRect();
+  if(rect.top < window.innerHeight - 60){
+    statsAnimated = true;
+    statNums.forEach(el => {
+      const target = parseInt(el.getAttribute('data-count'), 10);
+      const suffix = el.textContent.replace(/[0-9]/g,'');
+      let current = 0;
+      const step = Math.max(1, Math.round(target / 30));
+      const timer = setInterval(() => {
+        current += step;
+        if(current >= target){ current = target; clearInterval(timer); }
+        el.textContent = current + suffix;
+      }, 25);
+    });
+  }
+}
+window.addEventListener('scroll', animateStats);
+animateStats();
+
+// ---- Scroll reveal ----
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){ entry.target.classList.add('visible'); io.unobserve(entry.target); }
+  });
+}, {threshold:0.15});
+revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

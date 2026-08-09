@@ -302,18 +302,6 @@ nav{
 .mgmt-role{font-family:'Rajdhani',sans-serif;font-weight:700;text-transform:uppercase;font-size:.9rem;}
 .mgmt-name{color:var(--text-muted);font-size:.78rem;margin-top:4px;}
 
-/* ============ SERIES / CARS ============ */
-.car-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-@media(max-width:900px){.car-grid{grid-template-columns:1fr;}}
-.car-card{padding:32px 24px;position:relative;overflow:hidden;}
-.car-card::before{
-  content:'';position:absolute;top:0;right:0;width:70px;height:70px;
-  background:var(--accent-soft);clip-path:polygon(100% 0,0 0,100% 100%);
-}
-.car-num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.8rem;}
-.car-name{font-size:1.35rem;margin:10px 0 4px;text-transform:uppercase;}
-.car-class{color:var(--text-muted);font-size:.85rem;}
-
 /* ============ TEAMS ============ */
 .teams-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 @media(max-width:960px){.teams-grid{grid-template-columns:repeat(2,1fr);}}
@@ -497,7 +485,6 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
       <img src="images/branding/logo.png" alt="ASPL Racing Series">
     </a>
     <div class="nav-links">
-      <a href="#series" data-de="Serie" data-en="Series">Serie</a>
       <a href="#teams" data-de="Teams" data-en="Teams">Teams</a>
       <a href="#highlights" data-de="Highlights" data-en="Highlights">Highlights</a>
       <a href="#schedule" data-de="Rennkalender" data-en="Schedule">Rennkalender</a>
@@ -526,7 +513,6 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
     <button class="lang-btn" data-lang="de">DE</button>
     <button class="lang-btn" data-lang="en">EN</button>
   </div>
-  <a href="#series" data-de="Serie" data-en="Series">Serie</a>
   <a href="#teams" data-de="Teams" data-en="Teams">Teams</a>
   <a href="#highlights" data-de="Highlights" data-en="Highlights">Highlights</a>
   <a href="#schedule" data-de="Rennkalender" data-en="Schedule">Rennkalender</a>
@@ -633,38 +619,10 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
   </div>
 </section>
 
-<!-- ============ SERIES ============ -->
-<section id="series" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="container">
-    <div class="eyebrow" data-de="02 — Solo Series" data-en="02 — Solo Series">02 — Solo Series</div>
-    <img src="images/branding/solo-series-logo.png" alt="ASPL Solo Series" style="height:56px;margin-bottom:18px;">
-    <h2 class="section-title" data-de="Season 2 — Jetzt live" data-en="Season 2 — Now Live">Season 2 — Jetzt live</h2>
-    <p class="section-sub" data-de="Drei GT3-Boliden. Eine Balance of Performance. Reines Fahrkönnen." data-en="Three GT3 cars. One Balance of Performance. Pure driver skill.">Drei GT3-Boliden. Eine Balance of Performance. Reines Fahrkönnen.</p>
-
-    <div class="car-grid">
-      <div class="car-card border-card reveal">
-        <div class="car-num" data-de="AUTO 01 / GT3" data-en="CAR 01 / GT3">AUTO 01 / GT3</div>
-        <div class="car-name">Ferrari 296 GT3</div>
-        <div class="car-class" data-de="Balance of Performance gilt" data-en="Balance of Performance applies">Balance of Performance gilt</div>
-      </div>
-      <div class="car-card border-card reveal">
-        <div class="car-num" data-de="AUTO 02 / GT3" data-en="CAR 02 / GT3">AUTO 02 / GT3</div>
-        <div class="car-name">Mercedes-AMG GT3 Evo</div>
-        <div class="car-class" data-de="Balance of Performance gilt" data-en="Balance of Performance applies">Balance of Performance gilt</div>
-      </div>
-      <div class="car-card border-card reveal">
-        <div class="car-num" data-de="AUTO 03 / GT3" data-en="CAR 03 / GT3">AUTO 03 / GT3</div>
-        <div class="car-name">Aston Martin V8 Vantage AMR GT3</div>
-        <div class="car-class" data-de="Balance of Performance gilt" data-en="Balance of Performance applies">Balance of Performance gilt</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ TEAMS ============ -->
 <section id="teams">
   <div class="container">
-    <div class="eyebrow" data-de="03 — Teams" data-en="03 — Teams">03 — Teams</div>
+    <div class="eyebrow" data-de="02 — Teams" data-en="02 — Teams">02 — Teams</div>
     <h2 class="section-title" data-de="Die neun Teams" data-en="The Nine Teams">Die neun Teams</h2>
     <p class="section-sub" data-de="Jeder Fahrer der Solo Series tritt unter einem dieser Banner an." data-en="Every driver in the Solo Series races under one of these banners.">Jeder Fahrer der Solo Series tritt unter einem dieser Banner an.</p>
 
@@ -758,7 +716,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ HIGHLIGHTS ============ -->
 <section id="highlights" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="container">
-    <div class="eyebrow" data-de="04 — Highlights" data-en="04 — Highlights">04 — Highlights</div>
+    <div class="eyebrow" data-de="03 — Highlights" data-en="03 — Highlights">03 — Highlights</div>
     <h2 class="section-title" data-de="Highlights" data-en="Highlights">Highlights</h2>
 
     <div class="highlight-grid">
@@ -805,7 +763,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ HALL OF FAME / MEDIA ============ -->
 <section style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="container">
-    <div class="eyebrow" data-de="05 — Hall of Fame" data-en="05 — Hall of Fame">05 — Hall of Fame</div>
+    <div class="eyebrow" data-de="04 — Hall of Fame" data-en="04 — Hall of Fame">04 — Hall of Fame</div>
     <h2 class="section-title" data-de="Season-1-Champion" data-en="Season 1 Champion">Season-1-Champion</h2>
     <p class="section-sub" data-de="Wir feiern die Fahrer, die sich ihren Platz an der Spitze bereits verdient haben." data-en="Celebrating the drivers who've already earned their place at the top.">Wir feiern die Fahrer, die sich ihren Platz an der Spitze bereits verdient haben.</p>
 
@@ -826,7 +784,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ PARTNERS ============ -->
 <section id="partners">
   <div class="container">
-    <div class="eyebrow" data-de="06 — Partner" data-en="06 — Partners">06 — Partner</div>
+    <div class="eyebrow" data-de="05 — Partner" data-en="05 — Partners">05 — Partner</div>
     <h2 class="section-title" data-de="Gemeinsam racen" data-en="Racing Together">Gemeinsam racen</h2>
     <p class="section-sub" data-de="ASPL veranstaltet Crossover-Events mit Partnerligen und -Communities." data-en="ASPL runs crossover events with partner leagues and communities.">ASPL veranstaltet Crossover-Events mit Partnerligen und -Communities.</p>
 
@@ -850,7 +808,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ SCHEDULE ============ -->
 <section id="schedule" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="container">
-    <div class="eyebrow" data-de="07 — Rennkalender" data-en="07 — Schedule">07 — Rennkalender</div>
+    <div class="eyebrow" data-de="06 — Rennkalender" data-en="06 — Schedule">06 — Rennkalender</div>
     <h2 class="section-title" data-de="Rennkalender" data-en="Race Calendar">Rennkalender</h2>
     <p class="section-sub" data-de="Alle Zeiten in Europe/Zurich. Bitte eure Ortszeit auf Discord prüfen." data-en="All times shown in Europe/Zurich. Confirm your local time on Discord.">Alle Zeiten in Europe/Zurich. Bitte eure Ortszeit auf Discord prüfen.</p>
 
@@ -863,7 +821,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ RESULTS ============ -->
 <section id="results">
   <div class="container">
-    <div class="eyebrow" data-de="08 — Ergebnisse" data-en="08 — Results">08 — Ergebnisse</div>
+    <div class="eyebrow" data-de="07 — Ergebnisse" data-en="07 — Results">07 — Ergebnisse</div>
     <h2 class="section-title" data-de="Tabellen" data-en="Standings">Tabellen</h2>
     <p class="section-sub" data-de="Meisterschaftstabellen Season 2 — nach jeder Runde aktualisiert." data-en="Season 2 championship standings — updated after every round.">Meisterschaftstabellen Season 2 — nach jeder Runde aktualisiert.</p>
 
@@ -999,7 +957,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ RULES ============ -->
 <section id="rules" style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="container">
-    <div class="eyebrow" data-de="09 — Regelwerk" data-en="09 — Rules">09 — Regelwerk</div>
+    <div class="eyebrow" data-de="08 — Regelwerk" data-en="08 — Rules">08 — Regelwerk</div>
     <h2 class="section-title" data-de="Offizielles Rennreglement" data-en="Official Racing Rules">Offizielles Rennreglement</h2>
     <p class="section-sub" data-de="ASPL GT3 Racing Series · Saison 2 — Solo-Series und Team-Series. Gültig für Rennen über 60 Minuten mit einem Pflichtboxenstopp." data-en="ASPL GT3 Racing Series · Season 2 — Solo Series and Team Series. Applies to 60-minute races with one mandatory pit stop.">ASPL GT3 Racing Series · Saison 2 — Solo-Series und Team-Series. Gültig für Rennen über 60 Minuten mit einem Pflichtboxenstopp.</p>
 
@@ -1377,7 +1335,7 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
 <!-- ============ JOIN ============ -->
 <section id="join" class="join-section">
   <div class="container">
-    <div class="eyebrow" data-de="10 — Rekrutierung" data-en="10 — Recruitment">10 — Rekrutierung</div>
+    <div class="eyebrow" data-de="09 — Rekrutierung" data-en="09 — Recruitment">09 — Rekrutierung</div>
     <h2 class="section-title" data-de="Race mit ASPL" data-en="Race With ASPL">Race mit ASPL</h2>
     <p class="section-sub" data-de="Racing ernst gemeint? Das brauchst du dafür." data-en="Serious about your racing? Here's what it takes.">Racing ernst gemeint? Das brauchst du dafür.</p>
 
@@ -1440,7 +1398,6 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
       <div class="footer-col">
         <h5 data-de="Liga" data-en="League">Liga</h5>
         <a href="#about" data-de="Über uns" data-en="About">Über uns</a>
-        <a href="#series" data-de="Solo Series" data-en="Solo Series">Solo Series</a>
         <a href="#teams" data-de="Teams" data-en="Teams">Teams</a>
       </div>
       <div class="footer-col">

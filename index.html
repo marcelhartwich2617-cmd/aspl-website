@@ -293,7 +293,9 @@ nav{
 .structure-children .structure-node{background:var(--bg-elevated);border:1px solid var(--border);font-size:.85rem;}
 .structure-teams-node{grid-column:span 2;background:var(--bg-elevated);border:1px solid var(--border);font-size:.8rem;color:var(--text-second);font-weight:600;}
 
-.mgmt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;max-width:400px;}
+.mgmt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;}
+@media(max-width:900px){.mgmt-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:640px){.mgmt-grid{grid-template-columns:repeat(2,1fr);}}
 .mgmt-card{padding:24px 16px;text-align:center;}
 .mgmt-avatar{
   width:56px;height:56px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);
@@ -584,24 +586,6 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
           <li data-de="Eine echte kompetitive Struktur, keine lockere Discord-Lobby." data-en="A real competitive structure, not a casual Discord lobby.">Eine echte kompetitive Struktur, keine lockere Discord-Lobby.</li>
           <li data-de="Klare Pace-Standards, damit Fahrer wissen, wo sie hingehören." data-en="Clear pace standards so drivers know where they fit.">Klare Pace-Standards, damit Fahrer wissen, wo sie hingehören.</li>
         </ul>
-
-        <div class="mgmt-grid">
-          <div class="mgmt-card border-card">
-            <div class="mgmt-avatar mono">RL</div>
-            <div class="mgmt-role" data-de="Rennleitung" data-en="Race Control">Rennleitung</div>
-            <div class="mgmt-name">Djlowtom</div>
-          </div>
-          <div class="mgmt-card border-card">
-            <div class="mgmt-avatar mono">MD</div>
-            <div class="mgmt-role" data-de="Medien" data-en="Media">Medien</div>
-            <div class="mgmt-name">mx5paul</div>
-          </div>
-        </div>
-        <p style="font-size:.78rem;color:var(--text-muted);margin-top:16px;"
-           data-de="Liga geführt von einem Owner plus fünf League Managern"
-           data-en="League led by an Owner plus five League Managers">
-          Liga geführt von einem Owner plus fünf League Managern
-        </p>
       </div>
 
       <div class="structure-diagram reveal">
@@ -614,6 +598,60 @@ footer{border-top:1px solid var(--border);padding:64px 0 32px;}
             9 Teams — Chronos · Cosmos · Golden Dynasty · HRT Virtual · LuMo · Nussy · Racing Team Langsam · SVR · Toxic
           </div>
         </div>
+      </div>
+    </div>
+
+    <h3 style="text-transform:uppercase;font-size:1.1rem;margin:56px 0 4px;" data-de="Das Team" data-en="The Team">Das Team</h3>
+    <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:24px;"
+       data-de="Liga geführt von zwei Liga Ownern und einem Liga Manager."
+       data-en="League led by two league owners and one league manager.">
+      Liga geführt von zwei Liga Ownern und einem Liga Manager.
+    </p>
+    <div class="mgmt-grid">
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">LO</div>
+        <div class="mgmt-role" data-de="Liga Owner" data-en="League Owner">Liga Owner</div>
+        <div class="mgmt-name">Djlowtom</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">CO</div>
+        <div class="mgmt-role" data-de="Co. Liga Owner" data-en="Co. League Owner">Co. Liga Owner</div>
+        <div class="mgmt-name">AeS Chillo</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">LM</div>
+        <div class="mgmt-role" data-de="Liga Manager" data-en="League Manager">Liga Manager</div>
+        <div class="mgmt-name">T.Scheibe</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">MD</div>
+        <div class="mgmt-role" data-de="Medien" data-en="Media">Medien</div>
+        <div class="mgmt-name">mx5paul</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">SW</div>
+        <div class="mgmt-role" data-de="Steward" data-en="Steward">Steward</div>
+        <div class="mgmt-name">ToxicTommy22</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">SW</div>
+        <div class="mgmt-role" data-de="Steward" data-en="Steward">Steward</div>
+        <div class="mgmt-name">Ikevii_rulez</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">SW</div>
+        <div class="mgmt-role" data-de="Steward" data-en="Steward">Steward</div>
+        <div class="mgmt-name">Ferrix73</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">KM</div>
+        <div class="mgmt-role" data-de="Kommentator" data-en="Commentator">Kommentator</div>
+        <div class="mgmt-name">Ds_darby</div>
+      </div>
+      <div class="mgmt-card border-card">
+        <div class="mgmt-avatar mono">KM</div>
+        <div class="mgmt-role" data-de="Kommentator" data-en="Commentator">Kommentator</div>
+        <div class="mgmt-name">TwistFlexYT</div>
       </div>
     </div>
   </div>
